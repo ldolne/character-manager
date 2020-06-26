@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Character creation</title>
+</head>
+<body>
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+</html>
+
+
+Useful ressources :
+
+<input type="file" accept="image/*, ...">
+    <input type="file" id="profile_pic" name="profile_pic"
+          accept=".jpg, .jpeg, .png">
+
+
+<form method="post" enctype="multipart/form-data">
+ <div>
+   <label for="file">Choose file to upload</label>
+   <input type="file" id="file" name="file" multiple>
+ </div>
+ <div>
+   <button>Submit</button>
+ </div>
+</form>
+
+
+Getting information on selected files
+The selected files' are returned by the element's HTMLInputElement.files property, which is a FileList object containing a list of File objects. The FileList behaves like an array, so you can check its length property to get the number of selected files.
+
+You can access the list of files from event.target.files, which is a FileList object. Each item in the FileList is a File object.
+
+<!-- The `multiple` attribute lets users select multiple files. -->
+<input type="file" id="file-selector" multiple>
+<script>
+  const fileSelector = document.getElementById('file-selector');
+  fileSelector.addEventListener('change', (event) => {
+    const fileList = event.target.files;
+    console.log(fileList);
+  });
+</script>
+
+
+Define the drop zone #
+To enable an element to be a drag-and-drop zone, you'll need to listen for two events, dragover and drop. The dragover event updates the browser UI to visually indicate that the drag-and-drop action is creating a copy of the file. The drop event is fired after the user has dropped the files onto the surface. Similar to the input element, you can access the list of files from event.dataTransfer.files, which is a FileList object. Each item in the FileList is a File object.
+
+const dropArea = document.getElementById('drop-area');
+
+dropArea.addEventListener('dragover', (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  // Style the drag-and-drop as a "copy file" operation.
+  event.dataTransfer.dropEffect = 'copy';
+});
+
+dropArea.addEventListener('drop', (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  const fileList = event.dataTransfer.files;
+  console.log(fileList);
+});
+event.stopPropagation() and event.preventDefault() stop the browser's default behavior from happening, and allow your code to run instead. Without them, the browser would otherwise navigate away from your page and open the files the user dropped into the browser window.
+
+function getMetadataForFileList(fileList) {
+  for (const file of fileList) {
+    // Not supported in Safari for iOS.
+    const name = file.name ? file.name : 'NOT SUPPORTED';
+    // Not supported in Firefox for Android or Opera for Android.
+    const type = file.type ? file.type : 'NOT SUPPORTED';
+    // Unknown cross-browser support.
+    const size = file.size ? file.size : 'NOT SUPPORTED';
+    console.log({file, name, type, size});
+  }
+}
+
+
+Read a file's content #
+To read a file, use FileReader, which enables you to read the content of a File object into memory. You can instruct FileReader to read a file as an array buffer, a data URL, or text.
+
+
+function readImage(file) {
+  // Check if the file is an image.
+  if (file.type && file.type.indexOf('image') === -1) {
+    console.log('File is not an image.', file.type, file);
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.addEventListener('load', (event) => {
+    img.src = event.target.result;
+  });
+  reader.readAsDataURL(file);
+}
+
+
+
+
+
+
+
+// CODE MDN
+const input = document.querySelector('input');
+const preview = document.querySelector('.preview');
+
+input.style.opacity = 0;
+
+function updateImageDisplay() {
+  while(preview.firstChild) {
+    preview.removeChild(preview.firstChild);
+  }
+
+  const curFiles = input.files;
+  if(curFiles.length === 0) {
+    const para = document.createElement('p');
+    para.textContent = 'No files currently selected for upload';
+    preview.appendChild(para);
+  } else {
+    const list = document.createElement('ol');
+    preview.appendChild(list);
+
+    for(const file of curFiles) {
+      const listItem = document.createElement('li');
+      const para = document.createElement('p');
+      if(validFileType(file)) {
+        para.textContent = `File name ${file.name}, file size ${returnFileSize(file.size)}.`;
+        const image = document.createElement('img');
+        image.src = URL.createObjectURL(file);
+
+        listItem.appendChild(image);
+        listItem.appendChild(para);
+      } else {
+        para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
+        listItem.appendChild(para);
+      }
+
+      list.appendChild(listItem);
+    }
+  }
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
+const fileTypes = [
+  "image/apng",
+  "image/bmp",
+  "image/gif",
+  "image/jpeg",
+  "image/pjpeg",
+  "image/png",
+  "image/svg+xml",
+  "image/tiff",
+  "image/webp",
+  "image/x-icon"
+];
+
+function validFileType(file) {
+  return fileTypes.includes(file.type);
+}
+
+
+function returnFileSize(number) {
+  if(number < 1024) {
+    return number + 'bytes';
+  } else if(number >= 1024 && number < 1048576) {
+    return (number/1024).toFixed(1) + 'KB';
+  } else if(number >= 1048576) {
+    return (number/1048576).toFixed(1) + 'MB';
+  }
+}
