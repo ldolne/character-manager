@@ -12,6 +12,53 @@
 </html>
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="assets/scss/main.scss">
+</head>
+<body>
+  <h1>Hello</h1>
+
+  <button id="getAllCharacters">Get All Characters</button>
+  <button id="getOneCharacter">Get One Character</button>
+  <button id="postOneCharacter">Post One Character</button>
+  <button id="updateOneCharacter">Update One Character</button>
+  <button id="deleteOneCharacter">Delete One Character</button>
+
+  <button id="run">Test</button>
+
+<template id="tpl-character">
+  <li id="name"></li>
+  <li id="shortDescription"></li>
+  <li id="description"></li>
+  <img id="image" src="">
+</template>
+
+<div id="character">
+  
+</div>
+
+
+<form>
+  <label for="name">Name:</label><br>
+  <input type="text" id="name" name="name"><br>
+  <label for="shortDescription">Short Description:</label><br>
+  <input type="text" id="shortDescription" name="shortDescription"><br>
+  <label for="description">Description:</label><br>
+  <input type="text" id="description" name="description"><br>
+  <label for="image">Image:</label><br>
+  <input type="file" id="image" name="image" accept=".jpg, .jpeg, .png, .gif"><br>
+</form>
+
+  
+<script src="assets/js/script.js"></script>
+</body>
+</html>
+
+
 Useful ressources :
 
 <input type="file" accept="image/*, ...">
