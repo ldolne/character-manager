@@ -8,11 +8,12 @@
 </head>
 <body>
 
-	<header class="jumbotron">
+	<header class="jumbotron jumbotron-fluid">
 		 <h1 class="display-4">Comics fan</h1>
 		  <p class="lead">Regrouper modifier et creer vos personnages favoris!!</p>
 		  <hr class="my-4">
 		  <p>Come and join our family!</p>
+		  <input class="btn btn-warning" type="button" value="Create Your Perso">
 	</header>
 
 	<main class= "container">
@@ -27,7 +28,9 @@
 		      <div class="card-body">
 		        <h5 class="card-title">Card title</h5>
 		        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		        
+		        <input class="btn btn-primary" id="editHeroes" type="button" value="Edit">
+		        <input class="btn btn-danger" id="deleteHeroes" type="button" value="Delete">
+
 		      </div>
 		    </div>
 		  </div>
@@ -50,6 +53,7 @@
 		</div>
 	</div>
 	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 </main>
 	<footer></footer>
 
