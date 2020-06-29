@@ -7,55 +7,57 @@
 
 </head>
 <body>
-
 	<header class="jumbotron jumbotron-fluid">
-		 <h1 class="display-4">Comics fan</h1>
-		  <p class="lead">Regrouper modifier et creer vos personnages favoris!!</p>
-		  <hr class="my-4">
-		  <p>Come and join our family!</p>
-		  <input class="btn btn-warning" type="button" value="Create Your Perso">
+		<h1 class="display-4">Comics fan</h1>
+		<p class="lead">Regrouper modifier et creer vos personnages favoris!!</p>
+		<hr class="my-4">
+		<p>Come and join our family!</p>
+		<input class="btn btn-warning" type="button" value="Create Your Perso">
 	</header>
 
 	<main class= "container">
-	<div class="row row-cols-1 row-cols-md-2">
-		<div class="col mb-4">
-		<div class="card mb-3" >
-		  <div class="row no-gutters">
-		    <div class="col-md-4">
-		      <img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
-		    </div>
-		    <div class="col-md-8">
-		      <div class="card-body">
-		        <h5 class="card-title">Card title</h5>
-		        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		        <input class="btn btn-primary" id="editHeroes" type="button" value="Edit">
-		        <input class="btn btn-danger" id="deleteHeroes" type="button" value="Delete">
-
-		      </div>
-		    </div>
-		  </div>
+		<div id="charactersBoard" class="row row-cols-1 row-cols-md-2">
+			<div class="col mb-4">
+				<div class="card mb-3" >
+					<div class="row no-gutters">
+						<div class="col-md-4">
+							<img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+								<input class="btn btn-secondary viewHero" type="button" value="View">
+								<input class="btn btn-primary editHero" type="button" value="Edit">
+								<input class="btn btn-danger deleteHero" type="button" value="Delete">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<template id="tpl-card">
+				<div class="col mb-4">
+					<div class="card mb-3" >
+						<div class="row no-gutters">
+							<div class="col-md-4">
+								<img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+									<input class="btn btn-secondary viewHero" type="button" value="View">
+									<input class="btn btn-primary editHero" type="button" value="Edit">
+									<input class="btn btn-danger deleteHero" type="button" value="Delete">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
 		</div>
-</div>
-<div class="col mb-4">
-		<div class="card mb-3" >
-		  <div class="row no-gutters">
-		    <div class="col-md-4">
-		      <img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
-		    </div>
-		    <div class="col-md-8">
-		      <div class="card-body">
-		        <h5 class="card-title">Card title</h5>
-		        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-		        
-		      </div>
-		    </div>
-		  </div>
-		</div>
-	</div>
-	
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
-</main>
+	</main>
 	<footer></footer>
-
+	<script type="text/javascript" src="assets/js/script.js"></script>
 </body>
 </html>

@@ -1,6 +1,10 @@
 const axios = require('axios').default; // avec intellisense/autocomplete
 const regeneratorRuntime = require("regenerator-runtime");
 
+let charactersID = [];
+let editButtons = [];
+let deleteButtons = [];
+
 class Character {
     constructor (name, shortDescription, description) {
 	    this.name = name;
@@ -13,16 +17,22 @@ class Character {
 (function main() {
 
 	// MAIN PROGRAM
-
-	document.getElementById("getAllCharacters").addEventListener("click", () => {
-		getAllExistingCharacters()
-		.then(charactersArray => {
-			displayAllCharacters(charactersArray.data);
-		})
-		.catch(error => console.error(error));
+	getAllExistingCharacters()
+	.then(charactersArray => {
+		displayAllCharacters(charactersArray.data);
+		console.table(charactersID);
+		getAllButtons();
 	})
+	.catch(error => console.error(error));
 
-	document.getElementById("getOneCharacter").addEventListener("click", () => {
+
+
+
+
+
+
+
+	/*document.getElementById("getOneCharacter").addEventListener("click", () => {
 		getOneCharacter("441a3c38-2aea-4051-90ae-41823e863233")
 		.then(character => console.table(character.data))
 		.catch(error => console.error(error));
@@ -49,9 +59,10 @@ class Character {
 
 	document.getElementById("run").addEventListener("click", () => {
 		createOneCharacter();
-	})
+	})*/
 })();
 
+// API CALLS
 
 async function getAllExistingCharacters() {
 	try {
@@ -114,21 +125,66 @@ async function deleteOneCharacter(characterToDelete) {
 	}
 }
 
+// DISPLAY FUNCTIONS
+
 function displayAllCharacters(charactersArray)
-{
-	const characterElement = document.getElementById("character");
-	const template = document.getElementById("tpl-character");
+{	
+	const charactersElement = document.getElementById("charactersBoard");
+	const template = document.getElementById("tpl-card");
 
 	charactersArray.forEach(character => {
 		const clone = template.content.cloneNode(true);
 
-		clone.getElementById("name").innerHTML = character.name;
-		clone.getElementById("shortDescription").innerHTML = character.shortDescription;
-		clone.getElementById("description").innerHTML = character.description;
-		clone.getElementById("image").src = character.image;
+		clone.querySelector(".card-title").innerHTML = character.name;
+		clone.querySelector(".card-text").innerHTML = character.shortDescription;
+		clone.querySelector(".card-img").src = "data:image/*;base64," + character.image;
+		charactersID.push(character.id);
 
-		characterElement.appendChild(clone);
+		charactersElement.appendChild(clone);
 	});
+	
+}
+
+function getAllButtons()
+{
+	viewButtons = document.getElementsByClassName("viewHero");
+	editButtons = document.getElementsByClassName("editHero");
+	deleteButtons = document.getElementsByClassName("deleteHero");
+
+	/*editButtons.forEach(editButton => {
+		editButton.addEventListener("click", () => {
+			// get un character en particulier
+		});
+	});*/
+
+	for (let i = 0; i < viewButtons.length; i++)
+	{
+		viewButtons[i].addEventListener("click", async () => {
+			// delete un character en particulier
+			return await deleteOneCharacter(charactersID[i]);
+			/*let removed = charactersID.splice(i, 1);
+			console.log(removed);
+			console.table(charactersID);*/
+			// Refresh/load la page
+		});
+
+		editButtons[i].addEventListener("click", async () => {
+			// delete un character en particulier
+			return await deleteOneCharacter(charactersID[i]);
+			/*let removed = charactersID.splice(i, 1);
+			console.log(removed);
+			console.table(charactersID);*/
+			// Refresh/load la page
+		});
+
+		deleteButtons[i].addEventListener("click", async () => {
+			return await deleteOneCharacter(charactersID[i]);
+			/*let removed = charactersID.splice(i, 1);
+			console.log(removed);
+			console.table(charactersID);*/
+			// Refresh/load la page
+		});
+	}
 }
 
 function createOneCharacter()
@@ -153,13 +209,6 @@ function createOneCharacter()
 
 	return newCharacter;
 }
-
-
-/*(async ()=>{
-    await axios.get('https://character-database.becode.xyz/characters%27).then((response)=%3E%7Bconsole.log(response)%7D);
-})();*/
-
-
 /*
 
 Character object
