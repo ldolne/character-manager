@@ -1,0 +1,18 @@
+body {
+  color: black;
+  font-size: 1.2em; }
+
+.title {
+  text-align: center;
+  margin: 10% 0 5% 0;
+  background-color: rgba(219, 87, 25, 0.9); }
+
+.align {
+  text-align: center;
+  margin-top: 4%; }
+
+.col-form-label {
+  font-weight: bold; }
+
+.btn-primary {
+  background-color: #0298ca; }
