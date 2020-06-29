@@ -2621,222 +2621,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var axios = require('axios').default; // avec intellisense/autocomplete
 
 
-var regeneratorRuntime = require("regenerator-runtime"); //console.log(axios);
+var regeneratorRuntime = require("regenerator-runtime");
 
-
-var Character = function Character(name, shortDescription, description, image) {
+var Character = function Character(name, shortDescription, description) {
   _classCallCheck(this, Character);
 
   this.name = name;
   this.shortDescription = shortDescription;
-  this.description = description;
-  this.image = image;
+  this.description = description; //this.image = image;
 };
 
-(function () {
-  function getAllExistingCharacters() {
-    return _getAllExistingCharacters.apply(this, arguments);
-  }
-
-  function _getAllExistingCharacters() {
-    _getAllExistingCharacters = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return axios.get("https://character-database.becode.xyz/characters");
-
-            case 3:
-              return _context.abrupt("return", _context.sent);
-
-            case 6:
-              _context.prev = 6;
-              _context.t0 = _context["catch"](0);
-              console.error(_context.t0);
-
-            case 9:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[0, 6]]);
-    }));
-    return _getAllExistingCharacters.apply(this, arguments);
-  }
-
-  function getOneCharacter(_x) {
-    return _getOneCharacter.apply(this, arguments);
-  }
-
-  function _getOneCharacter() {
-    _getOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(characterID) {
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              _context2.next = 3;
-              return axios.get("https://character-database.becode.xyz/characters" + "/" + characterID);
-
-            case 3:
-              return _context2.abrupt("return", _context2.sent);
-
-            case 6:
-              _context2.prev = 6;
-              _context2.t0 = _context2["catch"](0);
-              console.error(_context2.t0);
-
-            case 9:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 6]]);
-    }));
-    return _getOneCharacter.apply(this, arguments);
-  }
-
-  function postOneCharacter(_x2) {
-    return _postOneCharacter.apply(this, arguments);
-  }
-
-  function _postOneCharacter() {
-    _postOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(newCharacter) {
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return axios.post("https://character-database.becode.xyz/characters", {
-                id: newCharacter.id,
-                name: newCharacter.name,
-                shortDescription: newCharacter.shortDescription,
-                description: newCharacter.description,
-                image: newCharacter.image
-              });
-
-            case 3:
-              return _context3.abrupt("return", _context3.sent);
-
-            case 6:
-              _context3.prev = 6;
-              _context3.t0 = _context3["catch"](0);
-              console.error(_context3.t0);
-
-            case 9:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3, null, [[0, 6]]);
-    }));
-    return _postOneCharacter.apply(this, arguments);
-  }
-
-  function updateOneCharacter(_x3) {
-    return _updateOneCharacter.apply(this, arguments);
-  }
-
-  function _updateOneCharacter() {
-    _updateOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(characterToUpdate) {
-      return regeneratorRuntime.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.prev = 0;
-              _context4.next = 3;
-              return axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
-                id: characterToUpdate.id,
-                name: characterToUpdate.name,
-                shortDescription: characterToUpdate.shortDescription,
-                description: characterToUpdate.description,
-                image: characterToUpdate.image
-              });
-
-            case 3:
-              return _context4.abrupt("return", _context4.sent);
-
-            case 6:
-              _context4.prev = 6;
-              _context4.t0 = _context4["catch"](0);
-              console.error(_context4.t0);
-
-            case 9:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4, null, [[0, 6]]);
-    }));
-    return _updateOneCharacter.apply(this, arguments);
-  }
-
-  function deleteOneCharacter(_x4) {
-    return _deleteOneCharacter.apply(this, arguments);
-  }
-
-  function _deleteOneCharacter() {
-    _deleteOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(characterToDelete) {
-      return regeneratorRuntime.wrap(function _callee5$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.prev = 0;
-              _context5.next = 3;
-              return axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete.id);
-
-            case 3:
-              return _context5.abrupt("return", _context5.sent);
-
-            case 6:
-              _context5.prev = 6;
-              _context5.t0 = _context5["catch"](0);
-              console.error(_context5.t0);
-
-            case 9:
-            case "end":
-              return _context5.stop();
-          }
-        }
-      }, _callee5, null, [[0, 6]]);
-    }));
-    return _deleteOneCharacter.apply(this, arguments);
-  }
-
-  function displayAllCharacters(charactersArray) {
-    var characterElement = document.getElementById("character");
-    var template = document.getElementById("tpl-character");
-    charactersArray.forEach(function (character) {
-      var clone = template.content.cloneNode(true);
-      clone.getElementById("name").innerHTML = character.name;
-      clone.getElementById("shortDescription").innerHTML = character.shortDescription;
-      clone.getElementById("description").innerHTML = character.description;
-      clone.getElementById("image").src = character.image;
-      characterElement.appendChild(clone);
-    });
-  }
-
-  function createOneCharacter() {
-    var nameInput = document.getElementById("name").value;
-    var shortDescriptionInput = document.getElementById("shortDescription").value;
-    var descriptionInput = document.getElementById("description").value;
-    console.log(nameInput);
-    console.log(shortDescriptionInput);
-    console.log(descriptionInput);
-    var imageSelector = document.getElementById("image");
-    imageSelector.addEventListener("change", function (event) {
-      var imageInput = event.target.files;
-      console.table(imageInput);
-    });
-    var newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput, imageInput);
-    return newCharacter;
-  }
-
-  function updateOneCharacter(characterToUpdate) {}
-
+(function main() {
+  // MAIN PROGRAM
   document.getElementById("getAllCharacters").addEventListener("click", function () {
     getAllExistingCharacters().then(function (charactersArray) {
       displayAllCharacters(charactersArray.data);
@@ -2852,8 +2648,9 @@ var Character = function Character(name, shortDescription, description, image) {
     });
   });
   document.getElementById("postOneCharacter").addEventListener("click", function () {
-    getAllExistingCharacters().then(function (charactersArray) {
-      return console.table(charactersArray);
+    var characterToAdd = createOneCharacter();
+    postOneCharacter(characterToAdd).then(function (character) {
+      return console.table(character.data);
     }).catch(function (error) {
       return console.error(error);
     });
@@ -2866,9 +2663,7 @@ var Character = function Character(name, shortDescription, description, image) {
     });
   });
   document.getElementById("deleteOneCharacter").addEventListener("click", function () {
-    getAllExistingCharacters().then(function (charactersArray) {
-      return console.table(charactersArray);
-    }).catch(function (error) {
+    deleteOneCharacter().catch(function (error) {
       return console.error(error);
     });
   });
@@ -2876,6 +2671,207 @@ var Character = function Character(name, shortDescription, description, image) {
     createOneCharacter();
   });
 })();
+
+function getAllExistingCharacters() {
+  return _getAllExistingCharacters.apply(this, arguments);
+}
+
+function _getAllExistingCharacters() {
+  _getAllExistingCharacters = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return axios.get("https://character-database.becode.xyz/characters");
+
+          case 3:
+            return _context.abrupt("return", _context.sent);
+
+          case 6:
+            _context.prev = 6;
+            _context.t0 = _context["catch"](0);
+            console.error(_context.t0);
+
+          case 9:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 6]]);
+  }));
+  return _getAllExistingCharacters.apply(this, arguments);
+}
+
+function getOneCharacter(_x) {
+  return _getOneCharacter.apply(this, arguments);
+}
+
+function _getOneCharacter() {
+  _getOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(characterID) {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return axios.get("https://character-database.becode.xyz/characters" + "/" + characterID);
+
+          case 3:
+            return _context2.abrupt("return", _context2.sent);
+
+          case 6:
+            _context2.prev = 6;
+            _context2.t0 = _context2["catch"](0);
+            console.error(_context2.t0);
+
+          case 9:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 6]]);
+  }));
+  return _getOneCharacter.apply(this, arguments);
+}
+
+function postOneCharacter(_x2) {
+  return _postOneCharacter.apply(this, arguments);
+}
+
+function _postOneCharacter() {
+  _postOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(newCharacter) {
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            _context3.next = 3;
+            return axios.post("https://character-database.becode.xyz/characters", {
+              name: newCharacter.name,
+              shortDescription: newCharacter.shortDescription,
+              description: newCharacter.description
+            });
+
+          case 3:
+            return _context3.abrupt("return", _context3.sent);
+
+          case 6:
+            _context3.prev = 6;
+            _context3.t0 = _context3["catch"](0);
+            console.error(_context3.t0);
+
+          case 9:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[0, 6]]);
+  }));
+  return _postOneCharacter.apply(this, arguments);
+}
+
+function updateOneCharacter(_x3) {
+  return _updateOneCharacter.apply(this, arguments);
+}
+
+function _updateOneCharacter() {
+  _updateOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(characterToUpdate) {
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.prev = 0;
+            _context4.next = 3;
+            return axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
+              id: characterToUpdate.id,
+              name: characterToUpdate.name,
+              shortDescription: characterToUpdate.shortDescription,
+              description: characterToUpdate.description,
+              image: characterToUpdate.image
+            });
+
+          case 3:
+            return _context4.abrupt("return", _context4.sent);
+
+          case 6:
+            _context4.prev = 6;
+            _context4.t0 = _context4["catch"](0);
+            console.error(_context4.t0);
+
+          case 9:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[0, 6]]);
+  }));
+  return _updateOneCharacter.apply(this, arguments);
+}
+
+function deleteOneCharacter(_x4) {
+  return _deleteOneCharacter.apply(this, arguments);
+}
+
+function _deleteOneCharacter() {
+  _deleteOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(characterToDelete) {
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.prev = 0;
+            _context5.next = 3;
+            return axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete);
+
+          case 3:
+            return _context5.abrupt("return", _context5.sent);
+
+          case 6:
+            _context5.prev = 6;
+            _context5.t0 = _context5["catch"](0);
+            console.error(_context5.t0);
+
+          case 9:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, null, [[0, 6]]);
+  }));
+  return _deleteOneCharacter.apply(this, arguments);
+}
+
+function displayAllCharacters(charactersArray) {
+  var characterElement = document.getElementById("character");
+  var template = document.getElementById("tpl-character");
+  charactersArray.forEach(function (character) {
+    var clone = template.content.cloneNode(true);
+    clone.getElementById("name").innerHTML = character.name;
+    clone.getElementById("shortDescription").innerHTML = character.shortDescription;
+    clone.getElementById("description").innerHTML = character.description;
+    clone.getElementById("image").src = character.image;
+    characterElement.appendChild(clone);
+  });
+}
+
+function createOneCharacter() {
+  var nameInput = document.getElementById("name").value;
+  var shortDescriptionInput = document.getElementById("shortDescription").value;
+  var descriptionInput = document.getElementById("description").value;
+  console.log(nameInput);
+  console.log(shortDescriptionInput);
+  console.log(descriptionInput); // FAIRE LES IMAGES
+
+  /*const imageSelector = document.getElementById("image");
+  	imageSelector.addEventListener("change", event => {
+  	const imageInput = event.target.files;
+  	console.table(imageInput);
+  });*/
+
+  var newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput);
+  return newCharacter;
+}
 /*(async ()=>{
     await axios.get('https://character-database.becode.xyz/characters%27).then((response)=%3E%7Bconsole.log(response)%7D);
 })();*/
@@ -2884,7 +2880,7 @@ var Character = function Character(name, shortDescription, description, image) {
 
 Character object
 
-id: The identifier of the character as an UUID.
+id: The identifier of the character as an UUID. // auto
 name: The name of the character.
 shortDescription: A short description of the character.
 description: A long description of the character in Markdown.

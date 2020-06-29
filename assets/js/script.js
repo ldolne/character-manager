@@ -1,123 +1,18 @@
 const axios = require('axios').default; // avec intellisense/autocomplete
 const regeneratorRuntime = require("regenerator-runtime");
 
-//console.log(axios);
-
 class Character {
-    constructor (name, shortDescription, description, image) {
+    constructor (name, shortDescription, description) {
 	    this.name = name;
 	    this.shortDescription = shortDescription;
 	    this.description = description;
-	    this.image = image;
+	    //this.image = image;
 	}
 }
 
-(() => {
-	async function getAllExistingCharacters() {
-		try {
-			return await axios.get("https://character-database.becode.xyz/characters");
-		} 
-		catch (error) {
-			console.error(error);
-		}
-	}
+(function main() {
 
-	async function getOneCharacter(characterID) {
-		try {
-			return await axios.get("https://character-database.becode.xyz/characters" + "/" + characterID);
-		}
-		catch (error) {
-			console.error(error);
-		}
-	}
-
-	async function postOneCharacter(newCharacter) {
-		try {
-
-			return await axios.post("https://character-database.becode.xyz/characters", {
-				id: newCharacter.id,
-				name: newCharacter.name,
-				shortDescription: newCharacter.shortDescription,
-				description: newCharacter.description,
-				image: newCharacter.image
-			});
-		}
-		catch (error)
-		{
-			console.error(error);
-		}
-	}
-
-	async function updateOneCharacter(characterToUpdate) {
-		try {
-
-			return await axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
-				id: characterToUpdate.id,
-				name: characterToUpdate.name,
-				shortDescription: characterToUpdate.shortDescription,
-				description: characterToUpdate.description,
-				image: characterToUpdate.image
-			});
-		}
-		catch (error)
-		{
-			console.error(error);
-		}
-	}
-
-	async function deleteOneCharacter(characterToDelete) {
-		try {
-
-			return await axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete.id);
-		}
-		catch (error)
-		{
-			console.error(error);
-		}
-	}
-
-	function displayAllCharacters(charactersArray)
-	{
-		const characterElement = document.getElementById("character");
-		const template = document.getElementById("tpl-character");
-
-		charactersArray.forEach(character => {
-			const clone = template.content.cloneNode(true);
-
-			clone.getElementById("name").innerHTML = character.name;
-			clone.getElementById("shortDescription").innerHTML = character.shortDescription;
-			clone.getElementById("description").innerHTML = character.description;
-			clone.getElementById("image").src = character.image;
-
-			characterElement.appendChild(clone);
-		});
-	}
-	
-	function createOneCharacter()
-	{
-		const nameInput = document.getElementById("name").value;
-		const shortDescriptionInput = document.getElementById("shortDescription").value;
-		const descriptionInput = document.getElementById("description").value;
-
-		console.log(nameInput);
-		console.log(shortDescriptionInput);
-		console.log(descriptionInput);
-		const imageSelector = document.getElementById("image");
-
-		imageSelector.addEventListener("change", event => {
-			const imageInput = event.target.files;
-			console.table(imageInput);
-		});
-
-		const newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput, imageInput);
-
-		return newCharacter;
-	}
-
-	function updateOneCharacter(characterToUpdate)
-	{
-
-	}
+	// MAIN PROGRAM
 
 	document.getElementById("getAllCharacters").addEventListener("click", () => {
 		getAllExistingCharacters()
@@ -134,8 +29,10 @@ class Character {
 	})
 
 	document.getElementById("postOneCharacter").addEventListener("click", () => {
-		getAllExistingCharacters()
-		.then(charactersArray => console.table(charactersArray))
+		const characterToAdd = createOneCharacter();
+
+		postOneCharacter(characterToAdd)
+		.then(character => console.table(character.data))
 		.catch(error => console.error(error));
 	})
 
@@ -146,8 +43,7 @@ class Character {
 	})
 
 	document.getElementById("deleteOneCharacter").addEventListener("click", () => {
-		getAllExistingCharacters()
-		.then(charactersArray => console.table(charactersArray))
+		deleteOneCharacter()
 		.catch(error => console.error(error));
 	})
 
@@ -155,6 +51,108 @@ class Character {
 		createOneCharacter();
 	})
 })();
+
+
+async function getAllExistingCharacters() {
+	try {
+		return await axios.get("https://character-database.becode.xyz/characters");
+	} 
+	catch (error) {
+		console.error(error);
+	}
+}
+
+async function getOneCharacter(characterID) {
+	try {
+		return await axios.get("https://character-database.becode.xyz/characters" + "/" + characterID);
+	}
+	catch (error) {
+		console.error(error);
+	}
+}
+
+async function postOneCharacter(newCharacter) {
+	try {
+
+		return await axios.post("https://character-database.becode.xyz/characters", {
+			name: newCharacter.name,
+			shortDescription: newCharacter.shortDescription,
+			description: newCharacter.description
+		});
+	}
+	catch (error)
+	{
+		console.error(error);
+	}
+}
+
+async function updateOneCharacter(characterToUpdate) {
+	try {
+
+		return await axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
+			id: characterToUpdate.id,
+			name: characterToUpdate.name,
+			shortDescription: characterToUpdate.shortDescription,
+			description: characterToUpdate.description,
+			image: characterToUpdate.image
+		});
+	}
+	catch (error)
+	{
+		console.error(error);
+	}
+}
+
+async function deleteOneCharacter(characterToDelete) {
+	try {
+
+		return await axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete);
+	}
+	catch (error)
+	{
+		console.error(error);
+	}
+}
+
+function displayAllCharacters(charactersArray)
+{
+	const characterElement = document.getElementById("character");
+	const template = document.getElementById("tpl-character");
+
+	charactersArray.forEach(character => {
+		const clone = template.content.cloneNode(true);
+
+		clone.getElementById("name").innerHTML = character.name;
+		clone.getElementById("shortDescription").innerHTML = character.shortDescription;
+		clone.getElementById("description").innerHTML = character.description;
+		clone.getElementById("image").src = character.image;
+
+		characterElement.appendChild(clone);
+	});
+}
+
+function createOneCharacter()
+{
+	const nameInput = document.getElementById("name").value;
+	const shortDescriptionInput = document.getElementById("shortDescription").value;
+	const descriptionInput = document.getElementById("description").value;
+
+	console.log(nameInput);
+	console.log(shortDescriptionInput);
+	console.log(descriptionInput);
+
+	// FAIRE LES IMAGES
+	/*const imageSelector = document.getElementById("image");
+
+	imageSelector.addEventListener("change", event => {
+		const imageInput = event.target.files;
+		console.table(imageInput);
+	});*/
+
+	const newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput);
+
+	return newCharacter;
+}
 
 
 /*(async ()=>{
@@ -166,7 +164,7 @@ class Character {
 
 Character object
 
-id: The identifier of the character as an UUID.
+id: The identifier of the character as an UUID. // auto
 name: The name of the character.
 shortDescription: A short description of the character.
 description: A long description of the character in Markdown.
