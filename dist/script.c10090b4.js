@@ -2623,20 +2623,23 @@ var axios = require('axios').default; // avec intellisense/autocomplete
 
 var regeneratorRuntime = require("regenerator-runtime");
 
-var charactersID = [];
-var editButtons = [];
-var deleteButtons = [];
-
-var Character = function Character(name, shortDescription, description) {
+var Character = function Character(name, shortDescription, description, image) {
   _classCallCheck(this, Character);
 
   this.name = name;
   this.shortDescription = shortDescription;
-  this.description = description; //this.image = image;
+  this.description = description;
+  this.image = image;
 };
 
 (function main() {
   // MAIN PROGRAM
+  var charactersID = [];
+  var editButtons = [];
+  var deleteButtons = [];
+  var viewWindow = document.getElementById("viewWindow");
+  var creationWindow = document.getElementById("creationWindow");
+  var editWindow = document.getElementById("editWindow");
   getAllExistingCharacters().then(function (charactersArray) {
     displayAllCharacters(charactersArray.data);
     console.table(charactersID);
@@ -2644,305 +2647,366 @@ var Character = function Character(name, shortDescription, description) {
   }).catch(function (error) {
     return console.error(error);
   });
-  /*document.getElementById("getOneCharacter").addEventListener("click", () => {
-  	getOneCharacter("441a3c38-2aea-4051-90ae-41823e863233")
-  	.then(character => console.table(character.data))
-  	.catch(error => console.error(error));
-  })
-  	document.getElementById("postOneCharacter").addEventListener("click", () => {
-  	const characterToAdd = createOneCharacter();
-  		postOneCharacter(characterToAdd)
-  	.then(character => console.table(character.data))
-  	.catch(error => console.error(error));
-  })
-  	document.getElementById("updateOneCharacter").addEventListener("click", () => {
-  	getAllExistingCharacters()
-  	.then(charactersArray => console.table(charactersArray))
-  	.catch(error => console.error(error));
-  })
-  	document.getElementById("deleteOneCharacter").addEventListener("click", () => {
-  	deleteOneCharacter()
-  	.catch(error => console.error(error));
-  })
-  	document.getElementById("run").addEventListener("click", () => {
-  	createOneCharacter();
-  })*/
-})(); // API CALLS
-
-
-function getAllExistingCharacters() {
-  return _getAllExistingCharacters.apply(this, arguments);
-}
-
-function _getAllExistingCharacters() {
-  _getAllExistingCharacters = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.prev = 0;
-            _context4.next = 3;
-            return axios.get("https://character-database.becode.xyz/characters");
-
-          case 3:
-            return _context4.abrupt("return", _context4.sent);
-
-          case 6:
-            _context4.prev = 6;
-            _context4.t0 = _context4["catch"](0);
-            console.error(_context4.t0);
-
-          case 9:
-          case "end":
-            return _context4.stop();
-        }
-      }
-    }, _callee4, null, [[0, 6]]);
-  }));
-  return _getAllExistingCharacters.apply(this, arguments);
-}
-
-function getOneCharacter(_x) {
-  return _getOneCharacter.apply(this, arguments);
-}
-
-function _getOneCharacter() {
-  _getOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(characterID) {
-    return regeneratorRuntime.wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.prev = 0;
-            _context5.next = 3;
-            return axios.get("https://character-database.becode.xyz/characters" + "/" + characterID);
-
-          case 3:
-            return _context5.abrupt("return", _context5.sent);
-
-          case 6:
-            _context5.prev = 6;
-            _context5.t0 = _context5["catch"](0);
-            console.error(_context5.t0);
-
-          case 9:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5, null, [[0, 6]]);
-  }));
-  return _getOneCharacter.apply(this, arguments);
-}
-
-function postOneCharacter(_x2) {
-  return _postOneCharacter.apply(this, arguments);
-}
-
-function _postOneCharacter() {
-  _postOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(newCharacter) {
-    return regeneratorRuntime.wrap(function _callee6$(_context6) {
-      while (1) {
-        switch (_context6.prev = _context6.next) {
-          case 0:
-            _context6.prev = 0;
-            _context6.next = 3;
-            return axios.post("https://character-database.becode.xyz/characters", {
-              name: newCharacter.name,
-              shortDescription: newCharacter.shortDescription,
-              description: newCharacter.description
-            });
-
-          case 3:
-            return _context6.abrupt("return", _context6.sent);
-
-          case 6:
-            _context6.prev = 6;
-            _context6.t0 = _context6["catch"](0);
-            console.error(_context6.t0);
-
-          case 9:
-          case "end":
-            return _context6.stop();
-        }
-      }
-    }, _callee6, null, [[0, 6]]);
-  }));
-  return _postOneCharacter.apply(this, arguments);
-}
-
-function updateOneCharacter(_x3) {
-  return _updateOneCharacter.apply(this, arguments);
-}
-
-function _updateOneCharacter() {
-  _updateOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(characterToUpdate) {
-    return regeneratorRuntime.wrap(function _callee7$(_context7) {
-      while (1) {
-        switch (_context7.prev = _context7.next) {
-          case 0:
-            _context7.prev = 0;
-            _context7.next = 3;
-            return axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
-              id: characterToUpdate.id,
-              name: characterToUpdate.name,
-              shortDescription: characterToUpdate.shortDescription,
-              description: characterToUpdate.description,
-              image: characterToUpdate.image
-            });
-
-          case 3:
-            return _context7.abrupt("return", _context7.sent);
-
-          case 6:
-            _context7.prev = 6;
-            _context7.t0 = _context7["catch"](0);
-            console.error(_context7.t0);
-
-          case 9:
-          case "end":
-            return _context7.stop();
-        }
-      }
-    }, _callee7, null, [[0, 6]]);
-  }));
-  return _updateOneCharacter.apply(this, arguments);
-}
-
-function deleteOneCharacter(_x4) {
-  return _deleteOneCharacter.apply(this, arguments);
-} // DISPLAY FUNCTIONS
-
-
-function _deleteOneCharacter() {
-  _deleteOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(characterToDelete) {
-    return regeneratorRuntime.wrap(function _callee8$(_context8) {
-      while (1) {
-        switch (_context8.prev = _context8.next) {
-          case 0:
-            _context8.prev = 0;
-            _context8.next = 3;
-            return axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete);
-
-          case 3:
-            return _context8.abrupt("return", _context8.sent);
-
-          case 6:
-            _context8.prev = 6;
-            _context8.t0 = _context8["catch"](0);
-            console.error(_context8.t0);
-
-          case 9:
-          case "end":
-            return _context8.stop();
-        }
-      }
-    }, _callee8, null, [[0, 6]]);
-  }));
-  return _deleteOneCharacter.apply(this, arguments);
-}
-
-function displayAllCharacters(charactersArray) {
-  var charactersElement = document.getElementById("charactersBoard");
-  var template = document.getElementById("tpl-card");
-  charactersArray.forEach(function (character) {
-    var clone = template.content.cloneNode(true);
-    clone.querySelector(".card-title").innerHTML = character.name;
-    clone.querySelector(".card-text").innerHTML = character.shortDescription;
-    clone.querySelector(".card-img").src = "data:image/*;base64," + character.image;
-    charactersID.push(character.id);
-    charactersElement.appendChild(clone);
+  document.getElementById("getOneCharacter").addEventListener("click", function () {
+    getOneCharacter("441a3c38-2aea-4051-90ae-41823e863233").then(function (character) {
+      return console.table(character.data);
+    }).catch(function (error) {
+      return console.error(error);
+    });
   });
-}
-
-function getAllButtons() {
-  viewButtons = document.getElementsByClassName("viewHero");
-  editButtons = document.getElementsByClassName("editHero");
-  deleteButtons = document.getElementsByClassName("deleteHero");
-  /*editButtons.forEach(editButton => {
-  	editButton.addEventListener("click", () => {
-  		// get un character en particulier
+  document.getElementById("postOneCharacter").addEventListener("click", function () {
+    var characterToAdd = createOneCharacter();
+    postOneCharacter(characterToAdd).then(function (character) {
+      console.table(character.data);
+      window.location.reload(false);
+    }).catch(function (error) {
+      return console.error(error);
+    });
+  });
+  document.getElementById("updateOneCharacter").addEventListener("click", function () {
+    getAllExistingCharacters().then(function (charactersArray) {
+      return console.table(charactersArray);
+    }).catch(function (error) {
+      return console.error(error);
+    });
+  });
+  document.getElementById("deleteOneCharacter").addEventListener("click", function () {
+    deleteOneCharacter().catch(function (error) {
+      return console.error(error);
+    });
+  });
+  document.getElementById("run").addEventListener("click", function () {
+    createOneCharacter();
+  });
+  document.getElementById("imageSelector").addEventListener("change", function () {
+    readImage();
+  });
+  /*document.getElementById("closeButton").addEventListener("click", () => {
+  	undisplayWindow(viewWindow);
+  	undisplayWindow(creationWindow);
+  	undisplayWindow(editWindow);
+  });
+  	document.getElementById("createButton").addEventListener("click", () => {
+  	displayWindow(createWindow);
+  });
+  	document.getElementById("createSubmitButton").addEventListener("click", () => {
+  	createOneCharacter();
+  	undisplayWindow(creationWindow);
+  	//refresh
   	});
-  });*/
+  	It should also contain a button to delete the character. When this deleting an item, display a modal asking for confirmation.
+  
+  	*/
+  // API CALLS
 
-  var _loop = function _loop(i) {
-    viewButtons[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return deleteOneCharacter(charactersID[i]);
-
-            case 2:
-              return _context.abrupt("return", _context.sent);
-
-            case 3:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    })));
-    editButtons[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return deleteOneCharacter(charactersID[i]);
-
-            case 2:
-              return _context2.abrupt("return", _context2.sent);
-
-            case 3:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    })));
-    deleteButtons[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-      return regeneratorRuntime.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return deleteOneCharacter(charactersID[i]);
-
-            case 2:
-              return _context3.abrupt("return", _context3.sent);
-
-            case 3:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    })));
-  };
-
-  for (var i = 0; i < viewButtons.length; i++) {
-    _loop(i);
+  function getAllExistingCharacters() {
+    return _getAllExistingCharacters.apply(this, arguments);
   }
-}
 
-function createOneCharacter() {
-  var nameInput = document.getElementById("name").value;
-  var shortDescriptionInput = document.getElementById("shortDescription").value;
-  var descriptionInput = document.getElementById("description").value;
-  console.log(nameInput);
-  console.log(shortDescriptionInput);
-  console.log(descriptionInput); // FAIRE LES IMAGES
+  function _getAllExistingCharacters() {
+    _getAllExistingCharacters = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return axios.get("https://character-database.becode.xyz/characters");
 
-  /*const imageSelector = document.getElementById("image");
-  	imageSelector.addEventListener("change", event => {
-  	const imageInput = event.target.files;
-  	console.table(imageInput);
-  });*/
+            case 3:
+              return _context4.abrupt("return", _context4.sent);
 
-  var newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput);
-  return newCharacter;
-}
+            case 6:
+              _context4.prev = 6;
+              _context4.t0 = _context4["catch"](0);
+              console.error(_context4.t0);
+
+            case 9:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[0, 6]]);
+    }));
+    return _getAllExistingCharacters.apply(this, arguments);
+  }
+
+  function getOneCharacter(_x) {
+    return _getOneCharacter.apply(this, arguments);
+  }
+
+  function _getOneCharacter() {
+    _getOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(characterID) {
+      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              _context5.next = 3;
+              return axios.get("https://character-database.becode.xyz/characters" + "/" + characterID);
+
+            case 3:
+              return _context5.abrupt("return", _context5.sent);
+
+            case 6:
+              _context5.prev = 6;
+              _context5.t0 = _context5["catch"](0);
+              console.error(_context5.t0);
+
+            case 9:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5, null, [[0, 6]]);
+    }));
+    return _getOneCharacter.apply(this, arguments);
+  }
+
+  function postOneCharacter(_x2) {
+    return _postOneCharacter.apply(this, arguments);
+  }
+
+  function _postOneCharacter() {
+    _postOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(newCharacter) {
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.prev = 0;
+              _context6.next = 3;
+              return axios.post("https://character-database.becode.xyz/characters", {
+                name: newCharacter.name,
+                shortDescription: newCharacter.shortDescription,
+                description: newCharacter.description
+              });
+
+            case 3:
+              return _context6.abrupt("return", _context6.sent);
+
+            case 6:
+              _context6.prev = 6;
+              _context6.t0 = _context6["catch"](0);
+              console.error(_context6.t0);
+
+            case 9:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6, null, [[0, 6]]);
+    }));
+    return _postOneCharacter.apply(this, arguments);
+  }
+
+  function updateOneCharacter(_x3) {
+    return _updateOneCharacter.apply(this, arguments);
+  }
+
+  function _updateOneCharacter() {
+    _updateOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(characterToUpdate) {
+      return regeneratorRuntime.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.prev = 0;
+              _context7.next = 3;
+              return axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
+                id: characterToUpdate.id,
+                name: characterToUpdate.name,
+                shortDescription: characterToUpdate.shortDescription,
+                description: characterToUpdate.description,
+                image: characterToUpdate.image
+              });
+
+            case 3:
+              return _context7.abrupt("return", _context7.sent);
+
+            case 6:
+              _context7.prev = 6;
+              _context7.t0 = _context7["catch"](0);
+              console.error(_context7.t0);
+
+            case 9:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7, null, [[0, 6]]);
+    }));
+    return _updateOneCharacter.apply(this, arguments);
+  }
+
+  function deleteOneCharacter(_x4) {
+    return _deleteOneCharacter.apply(this, arguments);
+  } // DISPLAY FUNCTIONS
+
+
+  function _deleteOneCharacter() {
+    _deleteOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(characterToDelete) {
+      return regeneratorRuntime.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              _context8.prev = 0;
+              _context8.next = 3;
+              return axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete);
+
+            case 3:
+              return _context8.abrupt("return", _context8.sent);
+
+            case 6:
+              _context8.prev = 6;
+              _context8.t0 = _context8["catch"](0);
+              console.error(_context8.t0);
+
+            case 9:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8, null, [[0, 6]]);
+    }));
+    return _deleteOneCharacter.apply(this, arguments);
+  }
+
+  function displayAllCharacters(charactersArray) {
+    var charactersElement = document.getElementById("charactersBoard");
+    var template = document.getElementById("tpl-card");
+    charactersArray.forEach(function (character) {
+      var clone = template.content.cloneNode(true);
+      clone.querySelector(".card-title").innerHTML = character.name;
+      clone.querySelector(".card-text").innerHTML = character.shortDescription;
+      clone.querySelector(".card-img").src = "data:image/*;base64," + character.image;
+      charactersID.push(character.id);
+      charactersElement.appendChild(clone);
+    });
+  }
+
+  function displayOneCharacter(character) {
+    document.getElementById("view-card-title").innerHTML = character.name;
+    document.getElementById("view-card-text").innerHTML = character.shortDescription;
+    document.getElementById("view-card-longtext").innerHTML = character.description;
+    document.getElementById("view-card-img").src = "data:image/*;base64," + character.image;
+  }
+
+  function editOneCharacter(character) {
+    document.getElementById("edit-card-title").innerHTML = character.name;
+    document.getElementById("edit-card-text").innerHTML = character.shortDescription;
+    document.getElementById("edit-card-longtext").innerHTML = character.description;
+    document.getElementById("edit-card-img").src = "data:image/*;base64," + character.image;
+  }
+
+  function createOneCharacter() {
+    var nameInput = document.getElementById("name").value;
+    var shortDescriptionInput = document.getElementById("shortDescription").value;
+    var descriptionInput = document.getElementById("description").value;
+    var imagePreviewElement = document.getElementById("imagePreview");
+    console.log(nameInput);
+    console.log(shortDescriptionInput);
+    console.log(descriptionInput);
+    var base64String = imagePreviewElement.src.replace('data:', '').replace(/^.+,/, '');
+    console.log("dans fonction:", base64String);
+    var newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput, base64String);
+    return newCharacter;
+  }
+
+  function readImage() {
+    var imageSelectorInput = document.getElementById("imageSelector").files[0];
+    var imagePreviewElement = document.getElementById("imagePreview");
+    var reader = new FileReader();
+    reader.addEventListener('load', function (event) {
+      imagePreviewElement.src = event.target.result;
+    });
+    reader.readAsDataURL(imageSelectorInput);
+  }
+
+  function getAllButtons() {
+    viewButtons = document.getElementsByClassName("viewHero");
+    editButtons = document.getElementsByClassName("editHero");
+    deleteButtons = document.getElementsByClassName("deleteHero");
+
+    var _loop = function _loop(i) {
+      viewButtons[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var viewedCharacter;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                displayWindow(viewWindow);
+                _context.next = 3;
+                return getOneCharacter(charactersID[i]);
+
+              case 3:
+                viewedCharacter = _context.sent;
+                displayOneCharacter(viewedCharacter);
+                return _context.abrupt("return", viewedCharacter);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+      editButtons[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var editedCharacter;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                displayWindow(editWindow);
+                _context2.next = 3;
+                return getOneCharacter(charactersID[i]);
+
+              case 3:
+                editedCharacter = _context2.sent;
+                editOneCharacter(editedCharacter);
+                return _context2.abrupt("return", editedCharacter);
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      })));
+      deleteButtons[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var deletedCharacter;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return deleteOneCharacter(charactersID[i]);
+
+              case 2:
+                deletedCharacter = _context3.sent;
+                window.location.reload(false);
+                return _context3.abrupt("return", deletedCharacter);
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      })));
+    };
+
+    for (var i = 0; i < viewButtons.length; i++) {
+      _loop(i);
+    }
+  }
+
+  function displayWindow(window) {
+    window.style.display = "block";
+  }
+
+  function undisplayWindow(window) {
+    window.style.display = "none";
+  }
+})();
 /*
 
 Character object
@@ -3007,7 +3071,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34859" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36341" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
