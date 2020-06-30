@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Hero</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets/css/singleCharacter.css">
+	
+</head>
+<body class="container">
+
+<button id="btnPopup" class="btnPopup">Afficher Popup</button>
+<div id="overlay" class="overlay">
+<div id="popup" class="popup">
+<h2>
+Exemple simple de popup 
+<span id="btnClose" class="btnClose">&times;</span>
+</h2>
+<div>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a nulla 
+a massa interdum imperdiet sed nec nibh. Proin porttitor euismod nulla ut 
+interdum. Cras elementum placerat aliquam.
+</div>
+</div>
+</div>
+	<script type="text/javascript">
+		
+var btnPopup = document.getElementById('btnPopup');
+var overlay = document.getElementById('overlay');
+btnPopup.addEventListener('click',openMoadl);
+
+function openMoadl() {
+overlay.style.display='block';
+}
+	</script>
+</body>
+</html>

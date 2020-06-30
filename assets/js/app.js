@@ -1,13 +1,27 @@
-console.log( "hello world");
 
-const axios = require('axios');
+// var btnPopup = document.getElementById('btnPopup');
 
-async function makeGetRequest() {
+	var overlay = document.getElementById('overlay');
 
-  let res = await axios.get('https://character-database.becode.xyz/characters');
+	document.getElementById("openview").addEventListener("click", function() {
+	// btnPopup.addEventListener('click',viewwindow);
+	// function viewwindow() {
+	overlay.style.display='block';
+	});
 
-  let data = res.data;
-  console.log(data);
-}
+	document.getElementById("closeview").addEventListener("click", function() {
+	
+	overlay.style.display='none';
+	});
 
-makeGetRequest();
+	document.getElementById("btnCreation").addEventListener("click", function() {
+	
+	document.getElementById("overlayCreation").style.display='block';
+	});
+
+	document.getElementById("editHeroes").addEventListener("click", function() {
+	
+	document.getElementById("overlayEdit").style.display='block';
+	});
+
+
