@@ -1,6 +1,7 @@
 const axios = require('axios').default; // avec intellisense/autocomplete
 const regeneratorRuntime = require("regenerator-runtime");
 
+// Définition de la classe Character
 class Character {
     constructor (name, shortDescription, description, image) {
 	    this.name = name;
@@ -10,91 +11,89 @@ class Character {
 	}
 }
 
+// Fonction principale
 (function main() {
 
-	// MAIN PROGRAM
-
+	// Déclaration de variables globales du programme
 	let charactersID = [];
+	let viewButtons = [];
 	let editButtons = [];
 	let deleteButtons = [];
 
-	const viewWindow = document.getElementById("viewWindow");
-	const creationWindow = document.getElementById("creationWindow");
-	const editWindow = document.getElementById("editWindow");
+	let editedCharacter = {};
 
-	getAllExistingCharacters()
+	// Récupération d'éléments HTML
+	const viewWindow = document.getElementById("overlayView");
+	const createWindow = document.getElementById("overlayCreation");
+	const editWindow = document.getElementById("overlayEdit");
+
+	// Lancement du programme
+
+	// Génération des cartes contenant les données de l'API
+	axiosGetAllExistingCharacters()
 	.then(charactersArray => {
 		displayAllCharacters(charactersArray.data);
-		console.table(charactersID);
+		//console.table(charactersID);
 		getAllButtons();
 	})
 	.catch(error => console.error(error));
 
+	// Boutons d'action
 
-
-	document.getElementById("getOneCharacter").addEventListener("click", () => {
-		getOneCharacter("441a3c38-2aea-4051-90ae-41823e863233")
-		.then(character => console.table(character.data))
-		.catch(error => console.error(error));
+	document.getElementById("btnCreation").addEventListener("click", () => {
+		displayWindow(createWindow);
 	});
 
-	document.getElementById("postOneCharacter").addEventListener("click", () => {
+	document.getElementById("createSubmitButton2").addEventListener("click", () => {
 		const characterToAdd = createOneCharacter();
 
-		postOneCharacter(characterToAdd)
+		console.log(characterToAdd.name);
+
+		axiosPostOneCharacter(characterToAdd)
 		.then(character => {
-			console.table(character.data)
+			console.table(character.data);
+			//undisplayWindow(createWindow);
 			window.location.reload(false);
 		})
 		.catch(error => console.error(error));
 	});
 
-	document.getElementById("updateOneCharacter").addEventListener("click", () => {
-		getAllExistingCharacters()
-		.then(charactersArray => console.table(charactersArray))
+	document.getElementById("editSubmitButton").addEventListener("click", () => {
+		editedCharacter = changeValuesToEditOneCharacter(editedCharacter);
+
+		axiosUpdateOneCharacter(editedCharacter)
+		.then(() => {
+			undisplayWindow(editWindow);
+			window.location.reload(false);
+		})
 		.catch(error => console.error(error));
 	});
 
-	document.getElementById("deleteOneCharacter").addEventListener("click", () => {
-		deleteOneCharacter()
-		.catch(error => console.error(error));
+	document.getElementById("createImgSelector2").addEventListener("change", () => {
+		readImage(document.getElementById("createImgSelector2"), document.getElementById("createImgPreview2"));		
 	});
 
-	document.getElementById("run").addEventListener("click", () => {
-		createOneCharacter();
+	document.getElementById("editImgSelector").addEventListener("change", () => {
+		readImage(document.getElementById("editImgSelector"), document.getElementById("editImgPreview"));
 	});
 
-	document.getElementById("imageSelector").addEventListener("change", () => {
-		readImage();
-	});
+	/*document.getElementById("editDeleteButton").addEventListener("click", () => {
+		deleteOneCharacter(editedCharacter.id);
+		undisplayWindow(editWindow);
+	});*/
 
-	/*document.getElementById("closeButton").addEventListener("click", () => {
+	document.getElementById("closeView").addEventListener("click", () => {
 		undisplayWindow(viewWindow);
-		undisplayWindow(creationWindow);
+		undisplayWindow(createWindow);
 		undisplayWindow(editWindow);
 	});
 
-	document.getElementById("createButton").addEventListener("click", () => {
-		displayWindow(createWindow);
-	});
-
-	document.getElementById("createSubmitButton").addEventListener("click", () => {
-		createOneCharacter();
-		undisplayWindow(creationWindow);
-		//refresh
-
-	});
-
-	It should also contain a button to delete the character. When this deleting an item, display a modal asking for confirmation.
+	// FIN MAIN PROGRAM
 
 
+	// FUNCTIONS API CALLS
 
-	*/
-
-
-	// API CALLS
-
-	async function getAllExistingCharacters() {
+	async function axiosGetAllExistingCharacters() {
 		try {
 			return await axios.get("https://character-database.becode.xyz/characters");
 		} 
@@ -103,7 +102,7 @@ class Character {
 		}
 	}
 
-	async function getOneCharacter(characterID) {
+	async function axiosGetOneCharacter(characterID) {
 		try {
 			return await axios.get("https://character-database.becode.xyz/characters" + "/" + characterID);
 		}
@@ -112,13 +111,14 @@ class Character {
 		}
 	}
 
-	async function postOneCharacter(newCharacter) {
+	async function axiosPostOneCharacter(newCharacter) {
 		try {
 
 			return await axios.post("https://character-database.becode.xyz/characters", {
 				name: newCharacter.name,
 				shortDescription: newCharacter.shortDescription,
-				description: newCharacter.description
+				description: newCharacter.description,
+				image: newCharacter.image
 			});
 		}
 		catch (error)
@@ -127,11 +127,10 @@ class Character {
 		}
 	}
 
-	async function updateOneCharacter(characterToUpdate) {
+	async function axiosUpdateOneCharacter(characterToUpdate) {
 		try {
 
 			return await axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
-				id: characterToUpdate.id,
 				name: characterToUpdate.name,
 				shortDescription: characterToUpdate.shortDescription,
 				description: characterToUpdate.description,
@@ -144,7 +143,7 @@ class Character {
 		}
 	}
 
-	async function deleteOneCharacter(characterToDelete) {
+	async function axiosDeleteOneCharacter(characterToDelete) {
 		try {
 
 			return await axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete);
@@ -155,7 +154,33 @@ class Character {
 		}
 	}
 
-	// DISPLAY FUNCTIONS
+	// FUNCTIONS MANAGING DATA
+
+	function getAllButtons()
+	{
+		viewButtons = document.getElementsByClassName("viewHero");
+		editButtons = document.getElementsByClassName("editHero");
+		deleteButtons = document.getElementsByClassName("deleteHero");
+
+		for (let i = 0; i < viewButtons.length; i++)
+		{
+			viewButtons[i].addEventListener("click", async () => {
+				displayWindow(viewWindow);
+				const characterToView = await axiosGetOneCharacter(charactersID[i]);
+				displayOneCharacter(characterToView.data);
+			});
+
+			editButtons[i].addEventListener("click", async () => {
+				displayWindow(editWindow);
+				const characterToEdit = await axiosGetOneCharacter(charactersID[i]);
+				retrieveValuesToEditOneCharacter(characterToEdit.data);
+			});
+
+			deleteButtons[i].addEventListener("click", async () => {
+				return await deleteOneCharacter(i);
+			});
+		}
+	}
 
 	function displayAllCharacters(charactersArray)
 	{	
@@ -177,26 +202,32 @@ class Character {
 
 	function displayOneCharacter(character)
 	{	
-		document.getElementById("view-card-title").innerHTML = character.name;
-		document.getElementById("view-card-text").innerHTML = character.shortDescription;
-		document.getElementById("view-card-longtext").innerHTML = character.description;
-		document.getElementById("view-card-img").src = "data:image/*;base64," + character.image;
+		document.querySelector(".viewCardTitle").innerHTML = character.name;
+		document.querySelector(".viewCardText").innerHTML = character.shortDescription;
+		document.querySelector(".viewCardLongtext").innerHTML = character.description;
+		document.querySelector(".viewCardImg").src = "data:image/*;base64," + character.image;
 	}
 
-	function editOneCharacter(character)
+	function retrieveValuesToEditOneCharacter(character)
 	{	
-		document.getElementById("edit-card-title").innerHTML = character.name;
-		document.getElementById("edit-card-text").innerHTML = character.shortDescription;
-		document.getElementById("edit-card-longtext").innerHTML = character.description;
-		document.getElementById("edit-card-img").src = "data:image/*;base64," + character.image;
+		document.getElementById("editName").value = character.name;
+		document.getElementById("editShortDescription").value = character.shortDescription;
+		document.getElementById("editDescription").value = character.description;
+		document.getElementById("editImagePreview").src = "data:image/*;base64," + character.image;
+
+		characterToEdit = character;
 	}
 
-	function createOneCharacter()
+		// répétition sélection d'image et récupération base64
+		
+	function changeValuesToEditOneCharacter(character)
 	{
-		const nameInput = document.getElementById("name").value;
-		const shortDescriptionInput = document.getElementById("shortDescription").value;
-		const descriptionInput = document.getElementById("description").value;
-		const imagePreviewElement = document.getElementById("imagePreview");
+		// vérification que les champs soient tous remplis
+		const nameInput = document.getElementById("editName").value;
+		const shortDescriptionInput = document.getElementById("editShortDescription").value;
+		const descriptionInput = document.getElementById("editDescription").value;
+
+		const imagePreviewElement = document.getElementById("editImgPreview");
 
 		console.log(nameInput);
 		console.log(shortDescriptionInput);
@@ -207,61 +238,61 @@ class Character {
         .replace(/^.+,/, '');
 	    console.log("dans fonction:", base64String);
 
+	    character.name = nameInput;
+	    character.shortDescription = shortDescriptionInput;
+	    character.description = descriptionInput;
+	    character.image = base64String;
+
+		return character;
+	}
+
+	async function deleteOneCharacter(index)
+	{	
+		let response = confirm("Are you sure you want to delete this character?");
+
+		if(response === true)
+		{
+			const deletedCharacter = await axiosDeleteOneCharacter(charactersID[index]);
+			window.location.reload(false);
+			return deletedCharacter;
+		}
+		else
+		{
+			alert("The character has not been deleted.");
+		}
+	}
+
+	function createOneCharacter()
+	{
+		const nameInput = document.getElementById("createName2").value;
+		const shortDescriptionInput = document.getElementById("createShortDescription2").value;
+		const descriptionInput = document.getElementById("createDescription2").value;
+
+		const imagePreviewElement = document.getElementById("createImgPreview2");
+
+		console.log(nameInput);
+		console.log(shortDescriptionInput);
+		console.log(descriptionInput);
+
+		const base64String = imagePreviewElement.src
+		.replace('data:', '')
+        .replace(/^.+,/, '');
+
 		const newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput, base64String);
 
 		return newCharacter;
 	}
 
-	function readImage()
+	function readImage(imageSelector, imagePreview)
 	{
-		const imageSelectorInput = document.getElementById("imageSelector").files[0];
-		const imagePreviewElement = document.getElementById("imagePreview");
+		const imageSelectorInput = imageSelector.files[0];
+		const imagePreviewElement = imagePreview;
 
 		const reader = new FileReader();
+		reader.readAsDataURL(imageSelectorInput);
 		reader.addEventListener('load', (event) => {
 		    imagePreviewElement.src = event.target.result;
 		});
-
-		reader.readAsDataURL(imageSelectorInput);
-	}
-	
-	function getAllButtons()
-	{
-		viewButtons = document.getElementsByClassName("viewHero");
-		editButtons = document.getElementsByClassName("editHero");
-		deleteButtons = document.getElementsByClassName("deleteHero");
-
-		for (let i = 0; i < viewButtons.length; i++)
-		{
-			viewButtons[i].addEventListener("click", async () => {
-				displayWindow(viewWindow);
-				const viewedCharacter = await getOneCharacter(charactersID[i]);
-				displayOneCharacter(viewedCharacter);
-				return viewedCharacter;
-			});
-
-			editButtons[i].addEventListener("click", async () => {
-				displayWindow(editWindow);
-				const editedCharacter = await getOneCharacter(charactersID[i]);
-				editOneCharacter(editedCharacter);
-				return editedCharacter;
-			});
-
-			deleteButtons[i].addEventListener("click", async () => {
-				let response = confirm("Are you sure you want to delete this character?");
-
-				if(confirm)
-				{
-					const deletedCharacter = await deleteOneCharacter(charactersID[i]);
-					window.location.reload(false);
-					return deletedCharacter;
-				}
-				else
-				{
-					alert("The character has not been deleted.");
-				}
-			});
-		}
 	}
 
 	function displayWindow(window)
