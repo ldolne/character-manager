@@ -1,4 +1,4 @@
-.overlay {
+.overlayView {
   position: fixed;
   left: 0px;
   top: 0px;
@@ -9,8 +9,8 @@
   display: none; }
 
 .popup {
-  margin: 20% auto;
-  width: 90%; }
+  margin: 10% auto;
+  width: 70%; }
 
 .close {
   position: absolute;
@@ -23,3 +23,9 @@
   right: 5px; }
   .open :hover {
     color: gray; }
+
+.labelViewCard {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #db5719; }

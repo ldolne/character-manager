@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
 	<title>My Favorite Perso</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/creationStyle.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/singleCharacter.css">
 	<link href="assets/css/fontawesome-free-5.13.1-web/css/all.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -20,43 +20,48 @@
 	</header>
 
 	<main class= "container">
-		<div class="row row-cols-1 row-cols-md-2">
-			<div class="col mb-4">
-				<div class="card mb-3" >
-		  			<div class="row no-gutters">
-		    			<div class="col-md-4">
-		      				<img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
-		    			</div>
-		    			<div class="col-md-8">
-		      				<div class="card-body">
-			        			<h5 class="card-title">Card title</h5>
-			        			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-			        			<input class="btn btn-primary btnPopup" id="editHeroes" type="button" value="Edit">
-			        			<input class="btn btn-danger" id="deleteHeroes" type="button" value="Delete">
-			        			<button type="submit" class="btn open" id="openview"><i class="fas fa-expand fa-lg"></i>
-                				</button>
-		      				</div>
-		    			</div>
-		  			</div>
+		<div id="charactersBoard" class="row row-cols-1 row-cols-md-2">
+			<template id="tpl-card">
+				<div class="col mb-4">
+					<div class="card mb-3" >
+						<div class="row no-gutters">
+							<div class="col-md-4">
+								<img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+									<input class="btn btn-primary btnPopup editHero" type="button" value="Edit">
+									<input class="btn btn-danger deleteHero" type="button" value="Delete">
+									<button type="submit" class="btn open viewHero"><i class="fas fa-expand fa-lg"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
+			</template>
 		</div>
 
 <!-- viewwindow -->
-	<div id="overlay" class="overlay">
+	<div id="overlayView" class="overlayView">
 		<div class="col mb-4 popup" id="popup">
 			<div class="card mb-3 position">
 				<div class="row no-gutters">
 		    		<div class="col-md-4">
-		      			<img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
+		      			<img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img viewCardImg" alt="...">
 		    		</div>
 		    		<div class="col-md-8">
 		      			<div class="card-body">
-			        		<h5 class="card-title">Card title</h5>
-			        		<p class="card-text shortText">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-			        		<p class="card-text longText">Une tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres longue description</p>
+		      				<label class="labelViewCard">Name</label>
+			        		<h5 class="card-title viewCardTitle">Card title</h5>
+			        		<label class="labelViewCard">Short description</label>
+			        		<p class="card-text viewCardText ">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+			        		<label class="labelViewCard">Description</label>
+			        		<p class="card-text viewCardLongtext">Une tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres longue description</p>
 		      			</div>
-		      			<button type="submit" class="btn close" id="closeview"><i class="far fa-window-close fa-2x"></i>
+		      			<button type="submit" class="btn close" id="closeView"><i class="far fa-window-close fa-2x"></i>
                 		</button>
 		    		</div>
 				</div>
@@ -75,38 +80,42 @@
 <!-- formulaire -->
 			<form>
 				<div class="form-group row">
-				    <label for="NameHeroes" class="col-sm-2 col-form-label">Name</label>
+				    <label for="editName" class="col-sm-2 col-form-label">Name</label>
 				    <div class="col-sm-10">
-				      	<input type="text" class="form-control" id="NameHeroes">
+				      	<input type="text" class="form-control" id="editName">
 				    </div>
 				</div>
 
 				<div class="form-group row">
-				    <label for="shortDescription" class="col-sm-2 col-form-label">Short description</label>
+				    <label for="editShortDescription" class="col-sm-2 col-form-label">Short description</label>
 				    <div class="col-sm-10">
-				      	<input type="text" class="form-control" id="shortDescription" placeholder="Describe your hero in one line">
+				      	<input type="text" class="form-control" id="editShortDescription" placeholder="Describe your hero in one line">
 				    </div>
 				</div> 
 
 				<div class="form-group row">
-					<label for="img" class="col-sm-2 col-form-label">Select image:</label>
+					<label for="editImgSelector" class="col-sm-2 col-form-label">Select image:</label>
 					<div class="col-sm-10">
-				  		<input type="file" class=".form-control-file" id="img" name="img" accept="image/png, image/jpeg">
+				  		<input type="file" class=".form-control-file" id="editImgSelector" name="img" accept="image/png, image/jpeg">
+				  		<img id="editImgPreview" src="">
 				  	</div>
 				</div>
 
 				<div class="form-group row">
-				    <label for="Description" class="col-sm-2 col-form-label">Description</label>
+				    <label for="editDescription" class="col-sm-2 col-form-label">Description</label>
 				    <div class="col-sm-10">
-				      	<textarea class="form-control" id="Description" placeholder="Write here a full description of Hero." rows="10"></textarea>
+				      	<textarea class="form-control" id="editDescription" placeholder="Write here a full description of Hero." rows="10"></textarea>
 				    </div>
 				</div>
 
 				<div class="form-group row">
 				    <div class="col-sm-10 align">
-				    	<button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+				    	<button type="submit" id="editSubmitButton" class="btn btn-primary btn-lg marginEditBtn">Sign in</button>
+				    	<input class="btn btn-danger btn-lg deleteHero" type="button" value="Delete">
 				    </div>
 				</div>
+				<button type="submit" class="btn editclose" id="closeView"><i class="far fa-window-close fa-2x"></i>
+
 			</form>
 		</div>
 	</div>
@@ -123,44 +132,47 @@
 	<!-- formulaire -->
 			<form>
 				<div class="form-group row">
-				    <label for="NameHeroes" class="col-sm-2 col-form-label">Name</label>
+				    <label for="createName" class="col-sm-2 col-form-label">Name</label>
 				    <div class="col-sm-10">
-				      	<input type="text" class="form-control" id="NameHeroes">
+				      	<input type="text" class="form-control" id="createName">
 				    </div>
 				</div>
 
 				<div class="form-group row">
-				    <label for="shortDescription" class="col-sm-2 col-form-label">Short description</label>
+				    <label for="createShortDescription" class="col-sm-2 col-form-label">Short description</label>
 				    <div class="col-sm-10">
-				      	<input type="text" class="form-control" id="shortDescription" placeholder="Describe your hero in one line">
+				      	<input type="text" class="form-control" id="createShortDescription" placeholder="Describe your hero in one line">
 				    </div>
 				</div> 
 
 				<div class="form-group row">
-					<label for="img" class="col-sm-2 col-form-label">Select image:</label>
+					<label for="createImgSelector" class="col-sm-2 col-form-label">Select image:</label>
 					<div class="col-sm-10">
-				  		<input type="file" class=".form-control-file" id="img" name="img" accept="image/png, image/jpeg">
+				  		<input type="file" class=".form-control-file" id="createImgSelector" name="img" accept="image/png, image/jpeg">
 				  	</div>
 				</div>
 
 				<div class="form-group row">
-				    <label for="Description" class="col-sm-2 col-form-label">Description</label>
+				    <label for="createDescription" class="col-sm-2 col-form-label">Description</label>
 				    <div class="col-sm-10">
-				      	<textarea class="form-control" id="Description" placeholder="Write here a full description of Hero." rows="10"></textarea>
+				      	<textarea class="form-control" id="createDescription" placeholder="Write here a full description of Hero." rows="10"></textarea>
+				      	<img id="createImgPreview" src="">
 				    </div>
 				</div>
 
 				<div class="form-group row">
 				    <div class="col-sm-10 align">
-				    	<button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+				    	<button type="submit" id="createSubmitButton"class="btn btn-primary btn-lg">Sign in</button>
 				    </div>
 				</div>
+				<button type="submit" class="btn creationclose" id="closeView"><i class="far fa-window-close fa-2x"></i>
 			</form> 
 		</div>
 	</div>
 <!--fin-->
 </main>
 <footer></footer>
-<script type="text/javascript" src="assets/js/app.js"></script>
-</body>
+<!-- <script type="text/javascript" src="assets/js/app.js"></script>
+ --><!-- <script type="text/javascript" src="assets/js/script.js"></script>
+ --></body>
 </html>

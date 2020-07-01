@@ -1,4 +1,4 @@
-.overlay {
+.overlayView {
 position: fixed;
 left: 0px;
 top:0px;
@@ -9,8 +9,8 @@ z-index:1;
 display:none;
 }
 .popup{
-margin: 20% auto;
-width : 90%;
+margin: 10% auto;
+width : 70%;
 }
 
 .close{
@@ -26,4 +26,11 @@ width : 90%;
   :hover{
   	color: gray;
   }
+}
+
+.labelViewCard{
+	font-size: 1.1em;
+	font-weight: bold;	
+	text-decoration: underline;
+	color: rgb(219, 87, 25);
 }
