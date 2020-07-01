@@ -2658,9 +2658,8 @@ var Character = function Character(name, shortDescription, description, image) {
   document.getElementById("btnCreation").addEventListener("click", function () {
     displayWindow(createWindow);
   });
-  document.getElementById("createSubmitButton2").addEventListener("click", function () {
+  document.getElementById("createSubmitButton").addEventListener("click", function () {
     var characterToAdd = createOneCharacter();
-    console.log(characterToAdd.name);
     axiosPostOneCharacter(characterToAdd).then(function (character) {
       console.table(character.data); //undisplayWindow(createWindow);
 
@@ -2671,15 +2670,16 @@ var Character = function Character(name, shortDescription, description, image) {
   });
   document.getElementById("editSubmitButton").addEventListener("click", function () {
     editedCharacter = changeValuesToEditOneCharacter(editedCharacter);
-    axiosUpdateOneCharacter(editedCharacter).then(function () {
-      undisplayWindow(editWindow);
-      window.location.reload(false);
+    console.log("editedcharacter", editedCharacter);
+    axiosUpdateOneCharacter(editedCharacter).then(function (data) {
+      console.table(data); //undisplayWindow(editWindow);
+      //window.location.reload(false);
     }).catch(function (error) {
       return console.error(error);
     });
   });
-  document.getElementById("createImgSelector2").addEventListener("change", function () {
-    readImage(document.getElementById("createImgSelector2"), document.getElementById("createImgPreview2"));
+  document.getElementById("createImgSelector").addEventListener("change", function () {
+    readImage(document.getElementById("createImgSelector"), document.getElementById("createImgPreview"));
   });
   document.getElementById("editImgSelector").addEventListener("change", function () {
     readImage(document.getElementById("editImgSelector"), document.getElementById("editImgPreview"));
@@ -2691,7 +2691,11 @@ var Character = function Character(name, shortDescription, description, image) {
 
   document.getElementById("closeView").addEventListener("click", function () {
     undisplayWindow(viewWindow);
+  });
+  document.getElementById("closeCreate").addEventListener("click", function () {
     undisplayWindow(createWindow);
+  });
+  document.getElementById("closeEdit").addEventListener("click", function () {
     undisplayWindow(editWindow);
   }); // FIN MAIN PROGRAM
   // FUNCTIONS API CALLS
@@ -2807,8 +2811,9 @@ var Character = function Character(name, shortDescription, description, image) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              _context7.prev = 0;
-              _context7.next = 3;
+              console.log(characterToUpdate.id);
+              _context7.prev = 1;
+              _context7.next = 4;
               return axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
                 name: characterToUpdate.name,
                 shortDescription: characterToUpdate.shortDescription,
@@ -2816,20 +2821,20 @@ var Character = function Character(name, shortDescription, description, image) {
                 image: characterToUpdate.image
               });
 
-            case 3:
+            case 4:
               return _context7.abrupt("return", _context7.sent);
 
-            case 6:
-              _context7.prev = 6;
-              _context7.t0 = _context7["catch"](0);
+            case 7:
+              _context7.prev = 7;
+              _context7.t0 = _context7["catch"](1);
               console.error(_context7.t0);
 
-            case 9:
+            case 10:
             case "end":
               return _context7.stop();
           }
         }
-      }, _callee7, null, [[0, 6]]);
+      }, _callee7, null, [[1, 7]]);
     }));
     return _axiosUpdateOneCharacter.apply(this, arguments);
   }
@@ -2964,8 +2969,9 @@ var Character = function Character(name, shortDescription, description, image) {
     document.getElementById("editName").value = character.name;
     document.getElementById("editShortDescription").value = character.shortDescription;
     document.getElementById("editDescription").value = character.description;
-    document.getElementById("editImagePreview").src = "data:image/*;base64," + character.image;
+    document.getElementById("editImgPreview").src = "data:image/*;base64," + character.image;
     characterToEdit = character;
+    console.log("retrieveValue", characterToEdit.name);
   } // répétition sélection d'image et récupération base64
 
 
@@ -2979,7 +2985,6 @@ var Character = function Character(name, shortDescription, description, image) {
     console.log(shortDescriptionInput);
     console.log(descriptionInput);
     var base64String = imagePreviewElement.src.replace('data:', '').replace(/^.+,/, '');
-    console.log("dans fonction:", base64String);
     character.name = nameInput;
     character.shortDescription = shortDescriptionInput;
     character.description = descriptionInput;
@@ -3027,10 +3032,10 @@ var Character = function Character(name, shortDescription, description, image) {
   }
 
   function createOneCharacter() {
-    var nameInput = document.getElementById("createName2").value;
-    var shortDescriptionInput = document.getElementById("createShortDescription2").value;
-    var descriptionInput = document.getElementById("createDescription2").value;
-    var imagePreviewElement = document.getElementById("createImgPreview2");
+    var nameInput = document.getElementById("createName").value;
+    var shortDescriptionInput = document.getElementById("createShortDescription").value;
+    var descriptionInput = document.getElementById("createDescription").value;
+    var imagePreviewElement = document.getElementById("createImgPreview");
     console.log(nameInput);
     console.log(shortDescriptionInput);
     console.log(descriptionInput);
@@ -3043,10 +3048,10 @@ var Character = function Character(name, shortDescription, description, image) {
     var imageSelectorInput = imageSelector.files[0];
     var imagePreviewElement = imagePreview;
     var reader = new FileReader();
-    reader.readAsDataURL(imageSelectorInput);
     reader.addEventListener('load', function (event) {
       imagePreviewElement.src = event.target.result;
     });
+    reader.readAsDataURL(imageSelectorInput);
   }
 
   function displayWindow(window) {
@@ -3121,7 +3126,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37693" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35081" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

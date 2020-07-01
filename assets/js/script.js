@@ -44,10 +44,8 @@ class Character {
 		displayWindow(createWindow);
 	});
 
-	document.getElementById("createSubmitButton2").addEventListener("click", () => {
+	document.getElementById("createSubmitButton").addEventListener("click", () => {
 		const characterToAdd = createOneCharacter();
-
-		console.log(characterToAdd.name);
 
 		axiosPostOneCharacter(characterToAdd)
 		.then(character => {
@@ -61,16 +59,19 @@ class Character {
 	document.getElementById("editSubmitButton").addEventListener("click", () => {
 		editedCharacter = changeValuesToEditOneCharacter(editedCharacter);
 
+		console.log("editedcharacter", editedCharacter);
+
 		axiosUpdateOneCharacter(editedCharacter)
-		.then(() => {
-			undisplayWindow(editWindow);
-			window.location.reload(false);
+		.then(data => {
+			console.table(data);
+			//undisplayWindow(editWindow);
+			//window.location.reload(false);
 		})
 		.catch(error => console.error(error));
 	});
 
-	document.getElementById("createImgSelector2").addEventListener("change", () => {
-		readImage(document.getElementById("createImgSelector2"), document.getElementById("createImgPreview2"));		
+	document.getElementById("createImgSelector").addEventListener("change", () => {
+		readImage(document.getElementById("createImgSelector"), document.getElementById("createImgPreview"));		
 	});
 
 	document.getElementById("editImgSelector").addEventListener("change", () => {
@@ -84,7 +85,13 @@ class Character {
 
 	document.getElementById("closeView").addEventListener("click", () => {
 		undisplayWindow(viewWindow);
+	});
+
+	document.getElementById("closeCreate").addEventListener("click", () => {
 		undisplayWindow(createWindow);
+	});
+
+	document.getElementById("closeEdit").addEventListener("click", () => {
 		undisplayWindow(editWindow);
 	});
 
@@ -128,6 +135,8 @@ class Character {
 	}
 
 	async function axiosUpdateOneCharacter(characterToUpdate) {
+		console.log(characterToUpdate.id);
+
 		try {
 
 			return await axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
@@ -213,9 +222,11 @@ class Character {
 		document.getElementById("editName").value = character.name;
 		document.getElementById("editShortDescription").value = character.shortDescription;
 		document.getElementById("editDescription").value = character.description;
-		document.getElementById("editImagePreview").src = "data:image/*;base64," + character.image;
+		document.getElementById("editImgPreview").src = "data:image/*;base64," + character.image;
 
 		characterToEdit = character;
+
+		console.log("retrieveValue", characterToEdit.name);
 	}
 
 		// répétition sélection d'image et récupération base64
@@ -236,7 +247,6 @@ class Character {
 		const base64String = imagePreviewElement.src
 		.replace('data:', '')
         .replace(/^.+,/, '');
-	    console.log("dans fonction:", base64String);
 
 	    character.name = nameInput;
 	    character.shortDescription = shortDescriptionInput;
@@ -264,11 +274,11 @@ class Character {
 
 	function createOneCharacter()
 	{
-		const nameInput = document.getElementById("createName2").value;
-		const shortDescriptionInput = document.getElementById("createShortDescription2").value;
-		const descriptionInput = document.getElementById("createDescription2").value;
+		const nameInput = document.getElementById("createName").value;
+		const shortDescriptionInput = document.getElementById("createShortDescription").value;
+		const descriptionInput = document.getElementById("createDescription").value;
 
-		const imagePreviewElement = document.getElementById("createImgPreview2");
+		const imagePreviewElement = document.getElementById("createImgPreview");
 
 		console.log(nameInput);
 		console.log(shortDescriptionInput);
@@ -289,10 +299,10 @@ class Character {
 		const imagePreviewElement = imagePreview;
 
 		const reader = new FileReader();
-		reader.readAsDataURL(imageSelectorInput);
 		reader.addEventListener('load', (event) => {
 		    imagePreviewElement.src = event.target.result;
 		});
+		reader.readAsDataURL(imageSelectorInput);
 	}
 
 	function displayWindow(window)
