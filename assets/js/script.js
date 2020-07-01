@@ -248,11 +248,18 @@ class Character {
 			});
 
 			deleteButtons[i].addEventListener("click", async () => {
-				//A way to delete the character (You must add some kind of confirmation, like "Are you sure you want to delete this character ?")
-				const deletedCharacter = await deleteOneCharacter(charactersID[i]);
-				window.location.reload(false);
-				return deletedCharacter;
-				console.log(i);
+				let response = confirm("Are you sure you want to delete this character?");
+
+				if(confirm)
+				{
+					const deletedCharacter = await deleteOneCharacter(charactersID[i]);
+					window.location.reload(false);
+					return deletedCharacter;
+				}
+				else
+				{
+					alert("The character has not been deleted.");
+				}
 			});
 		}
 	}
@@ -266,6 +273,7 @@ class Character {
 	{
 	    window.style.display = "none";
 	}
+
 })();
 
 

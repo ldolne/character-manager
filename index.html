@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="UTF-8">
 	<title>My Favorite Perso</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/main.css">
@@ -20,8 +21,8 @@
 	</header>
 
 	<main class= "container">
-		<div class="row row-cols-1 row-cols-md-2">
-			<div class="col mb-4">
+		<div id="charactersBoard" class="row row-cols-1 row-cols-md-2">
+			<!-- <div class="col mb-4">
 				<div class="card mb-3" >
 		  			<div class="row no-gutters">
 		    			<div class="col-md-4">
@@ -39,7 +40,29 @@
 		    			</div>
 		  			</div>
 				</div>
-			</div>
+			</div> -->
+
+			<template id="tpl-card">
+				<div class="col mb-4">
+					<div class="card mb-3" >
+						<div class="row no-gutters">
+							<div class="col-md-4">
+								<img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+				        			<h5 class="card-title">Card title</h5>
+				        			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+				        			<input class="btn btn-primary btnPopup editHero" id="editHeroes" type="button" value="Edit">
+				        			<input class="btn btn-danger deleteHero" id="deleteHeroes" type="button" value="Delete">
+				        			<button type="submit" class="btn open viewHero" id="openview"><i class="fas fa-expand fa-lg"></i>
+	                				</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
 		</div>
 
 <!-- viewwindow -->
@@ -161,6 +184,7 @@
 <!--fin-->
 </main>
 <footer></footer>
-<script type="text/javascript" src="assets/js/app.js"></script>
+<!-- <script type="text/javascript" src="assets/js/app.js"></script> -->
+<script type="text/javascript" src="assets/js/script.js"></script>
 </body>
 </html>

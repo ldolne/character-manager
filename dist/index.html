@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>My Favorite Perso</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="/main.2b755954.css">
+	<link rel="stylesheet" type="text/css" href="/creationStyle.b196d194.css">
+	<link rel="stylesheet" type="text/css" href="/singleCharacter.df744e2a.css">
+	<link href="/all.c62153b8.css" rel="stylesheet">
+
+<script src="/main.2b755954.js"></script><script src="/creationStyle.b196d194.js"></script><script src="/singleCharacter.df744e2a.js"></script><script src="/all.c62153b8.js"></script></head>
+
+<body>
+	<header class="jumbotron jumbotron-fluid">
+		 <h1 class="display-4">Comics fan</h1>
+		  <p class="lead">Regrouper modifier et creer vos personnages favoris!!</p>
+		  <hr class="my-4">
+		  <p>Come and join our family!</p>
+		  <input class="btn btn-warning" id="btnCreation" type="button" value="Create Your Perso">
+	</header>
+
+	<main class="container">
+		<div id="charactersBoard" class="row row-cols-1 row-cols-md-2">
+			<!-- <div class="col mb-4">
+				<div class="card mb-3" >
+		  			<div class="row no-gutters">
+		    			<div class="col-md-4">
+		      				<img src="assets/img/judeus-samson-rAomxXulMNM-unsplash.jpg" class="card-img" alt="...">
+		    			</div>
+		    			<div class="col-md-8">
+		      				<div class="card-body">
+			        			<h5 class="card-title">Card title</h5>
+			        			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+			        			<input class="btn btn-primary btnPopup" id="editHeroes" type="button" value="Edit">
+			        			<input class="btn btn-danger" id="deleteHeroes" type="button" value="Delete">
+			        			<button type="submit" class="btn open" id="openview"><i class="fas fa-expand fa-lg"></i>
+                				</button>
+		      				</div>
+		    			</div>
+		  			</div>
+				</div>
+			</div> -->
+
+			<template id="tpl-card">
+				<div class="col mb-4">
+					<div class="card mb-3">
+						<div class="row no-gutters">
+							<div class="col-md-4">
+								<img src="/judeus-samson-rAomxXulMNM-unsplash.dadbc3ea.jpg" class="card-img" alt="...">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+				        			<h5 class="card-title">Card title</h5>
+				        			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+				        			<input class="btn btn-primary btnPopup editHero" id="editHeroes" type="button" value="Edit">
+				        			<input class="btn btn-danger deleteHero" id="deleteHeroes" type="button" value="Delete">
+				        			<button type="submit" class="btn open viewHero" id="openview"><i class="fas fa-expand fa-lg"></i>
+	                				</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</template>
+		</div>
+
+<!-- viewwindow -->
+	<div id="overlay" class="overlay">
+		<div class="col mb-4 popup" id="popup">
+			<div class="card mb-3 position">
+				<div class="row no-gutters">
+		    		<div class="col-md-4">
+		      			<img src="/judeus-samson-rAomxXulMNM-unsplash.dadbc3ea.jpg" class="card-img" alt="...">
+		    		</div>
+		    		<div class="col-md-8">
+		      			<div class="card-body">
+			        		<h5 class="card-title">Card title</h5>
+			        		<p class="card-text shortText">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+			        		<p class="card-text longText">Une tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres tres longue description</p>
+		      			</div>
+		      			<button type="submit" class="btn close" id="closeview"><i class="far fa-window-close fa-2x"></i>
+                		</button>
+		    		</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!-- editwindow-->
+<!-- Titre -->
+	<div class="overlayEdit" id="overlayEdit">
+		<div class="container">
+			<div class="title">
+				<h1>Editez votre personnage</h1>
+				<p>Modifiez les champs necessaire</p>
+			</div>
+<!-- formulaire -->
+			<form>
+				<div class="form-group row">
+				    <label for="NameHeroes" class="col-sm-2 col-form-label">Name</label>
+				    <div class="col-sm-10">
+				      	<input type="text" class="form-control" id="NameHeroes">
+				    </div>
+				</div>
+
+				<div class="form-group row">
+				    <label for="shortDescription" class="col-sm-2 col-form-label">Short description</label>
+				    <div class="col-sm-10">
+				      	<input type="text" class="form-control" id="shortDescription" placeholder="Describe your hero in one line">
+				    </div>
+				</div> 
+
+				<div class="form-group row">
+					<label for="img" class="col-sm-2 col-form-label">Select image:</label>
+					<div class="col-sm-10">
+				  		<input type="file" class=".form-control-file" id="img" name="img" accept="image/png, image/jpeg">
+				  	</div>
+				</div>
+
+				<div class="form-group row">
+				    <label for="Description" class="col-sm-2 col-form-label">Description</label>
+				    <div class="col-sm-10">
+				      	<textarea class="form-control" id="Description" placeholder="Write here a full description of Hero." rows="10"></textarea>
+				    </div>
+				</div>
+
+				<div class="form-group row">
+				    <div class="col-sm-10 align">
+				    	<button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+				    </div>
+				</div>
+			</form>
+		</div>
+	</div>
+<!-- fin -->
+
+<!-- creationwindow -->
+<!-- Titre -->
+	<div class="overlayCreation" id="overlayCreation">
+		<div class="container">
+			<div class="title ">
+				<h1>Crée un nouveau personnage</h1>
+				<p>Rempli tous les champs avec les informations sur ton personnage</p>
+			</div>
+	<!-- formulaire -->
+			<form>
+				<div class="form-group row">
+				    <label for="NameHeroes" class="col-sm-2 col-form-label">Name</label>
+				    <div class="col-sm-10">
+				      	<input type="text" class="form-control" id="NameHeroes">
+				    </div>
+				</div>
+
+				<div class="form-group row">
+				    <label for="shortDescription" class="col-sm-2 col-form-label">Short description</label>
+				    <div class="col-sm-10">
+				      	<input type="text" class="form-control" id="shortDescription" placeholder="Describe your hero in one line">
+				    </div>
+				</div> 
+
+				<div class="form-group row">
+					<label for="img" class="col-sm-2 col-form-label">Select image:</label>
+					<div class="col-sm-10">
+				  		<input type="file" class=".form-control-file" id="img" name="img" accept="image/png, image/jpeg">
+				  	</div>
+				</div>
+
+				<div class="form-group row">
+				    <label for="Description" class="col-sm-2 col-form-label">Description</label>
+				    <div class="col-sm-10">
+				      	<textarea class="form-control" id="Description" placeholder="Write here a full description of Hero." rows="10"></textarea>
+				    </div>
+				</div>
+
+				<div class="form-group row">
+				    <div class="col-sm-10 align">
+				    	<button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+				    </div>
+				</div>
+			</form> 
+		</div>
+	</div>
+<!--fin-->
+</main>
+<footer></footer>
+<!-- <script type="text/javascript" src="assets/js/app.js"></script> -->
+<script type="text/javascript" src="/script.c10090b4.js"></script>
+</body>
+</html>

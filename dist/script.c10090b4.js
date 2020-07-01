@@ -2972,20 +2972,30 @@ var Character = function Character(name, shortDescription, description, image) {
         }, _callee2);
       })));
       deleteButtons[i].addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-        var deletedCharacter;
+        var response, deletedCharacter;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
+                response = confirm("Are you sure you want to delete this character?");
+
+                if (!confirm) {
+                  _context3.next = 9;
+                  break;
+                }
+
+                _context3.next = 4;
                 return deleteOneCharacter(charactersID[i]);
 
-              case 2:
+              case 4:
                 deletedCharacter = _context3.sent;
                 window.location.reload(false);
                 return _context3.abrupt("return", deletedCharacter);
 
-              case 6:
+              case 9:
+                alert("The character has not been deleted.");
+
+              case 10:
               case "end":
                 return _context3.stop();
             }
@@ -3071,7 +3081,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36341" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36469" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
