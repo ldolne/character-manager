@@ -6,6 +6,7 @@ background-color: rgba(0,0 ,0 , 0.5);
 width: 100%;
 height: 100%;
 z-index:1;
+overflow: scroll;	
 display:none;
 }
 .popup{
@@ -26,4 +27,11 @@ width : 70%;
   :hover{
   	color: gray;
   }
+}
+
+.labelViewCard{
+	font-size: 1.1em;
+	font-weight: bold;	
+	text-decoration: underline;
+	color: rgb(219, 87, 25);
 }
