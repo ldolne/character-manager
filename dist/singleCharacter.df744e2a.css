@@ -1,0 +1,35 @@
+.overlayView {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: scroll;
+  display: none; }
+
+.popup {
+  margin: 10% auto;
+  width: 70%; }
+
+.close {
+  position: absolute;
+  top: 2px;
+  right: 5px; }
+
+.open {
+  position: absolute;
+  top: 2px;
+  right: 5px; }
+  .open :hover {
+    color: gray; }
+
+.labelViewCard {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #db5719; }
+
+
+/*# sourceMappingURL=/singleCharacter.df744e2a.css.map */

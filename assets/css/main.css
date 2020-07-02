@@ -7168,6 +7168,10 @@ a.text-dark:hover, a.text-dark:focus {
   margin-bottom: 5rem;
   box-shadow: 3px 1px 9px black; }
 
+.fixBackground {
+  overflow-y: hidden;
+  overflow-x: hidden; }
+
 .card {
   box-shadow: 2px 1px 5px gray; }
 
