@@ -8,8 +8,7 @@ Below you will find the link to our page:
 
 Our super character manager: [Character Manager](https://ldolne.github.io/character-manager/ "Character Manager").
 
-For this job, we had to follow some guidelines. However, we didn't have time to introduce the Markdown as requested in the instructions within the time limit. 
-
+For this job, we had to follow some guidelines.
 
 # Challenge: Character Manager
 |Challenge Parameters  |Challenge Details              |
