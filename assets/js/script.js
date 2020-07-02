@@ -194,7 +194,6 @@ class Character {
 		{
 			toggleButtons[i].addEventListener("click", () => {
 				bodyElement.classList.toggle("fixBackground");
-				console.log("FixBG");
 			});
 		}
 	}
