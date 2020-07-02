@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "scss": "node-sass --watch assets/scss -o assets/css",
     "dev": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "rm -rf .cache dist && parcel build index.html --out-dir docs --public-url ./"
   },
   "repository": {
     "type": "git",
