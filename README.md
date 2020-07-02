@@ -104,9 +104,6 @@ To start using it today with the Character Database API you can **import** [this
 You can use a *css frameworks* like [Bootstrap](https://getbootstrap.com/) or [Materialize](https://materializecss.com/). 
 It will help you to design quickly your application. 
 
-## Show us your favorite serie/movie/game characters!
-
-![](https://media.giphy.com/media/tliXLSkzfq2C4/giphy.gif)
 
 
 Create by Laëtitia and Céline.
