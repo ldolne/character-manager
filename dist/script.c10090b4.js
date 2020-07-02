@@ -2640,7 +2640,7 @@ var Character = function Character(name, shortDescription, description, image) {
   var viewButtons = [];
   var editButtons = [];
   var deleteButtons = [];
-  var editedCharacter = {}; // Récupération d'éléments HTML
+  var characterToEdit = {}; // Récupération d'éléments HTML
 
   var viewWindow = document.getElementById("overlayView");
   var createWindow = document.getElementById("overlayCreation");
@@ -2656,24 +2656,27 @@ var Character = function Character(name, shortDescription, description, image) {
   }); // Boutons d'action
 
   document.getElementById("btnCreation").addEventListener("click", function () {
+    resetForm();
     displayWindow(createWindow);
   });
   document.getElementById("createSubmitButton").addEventListener("click", function () {
     var characterToAdd = createOneCharacter();
     axiosPostOneCharacter(characterToAdd).then(function (character) {
-      console.table(character.data); //undisplayWindow(createWindow);
-
+      console.table(character.data);
+      undisplayWindow(createWindow);
       window.location.reload(false);
     }).catch(function (error) {
       return console.error(error);
     });
   });
   document.getElementById("editSubmitButton").addEventListener("click", function () {
-    editedCharacter = changeValuesToEditOneCharacter(editedCharacter);
+    var editedCharacter = changeValuesToEditOneCharacter(characterToEdit);
     console.log("editedcharacter", editedCharacter);
+    console.log("editedcharacter ID", editedCharacter.id);
     axiosUpdateOneCharacter(editedCharacter).then(function (data) {
-      console.table(data); //undisplayWindow(editWindow);
-      //window.location.reload(false);
+      console.table(data);
+      undisplayWindow(editWindow);
+      window.location.reload(false);
     }).catch(function (error) {
       return console.error(error);
     });
@@ -2684,11 +2687,6 @@ var Character = function Character(name, shortDescription, description, image) {
   document.getElementById("editImgSelector").addEventListener("change", function () {
     readImage(document.getElementById("editImgSelector"), document.getElementById("editImgPreview"));
   });
-  /*document.getElementById("editDeleteButton").addEventListener("click", () => {
-  	deleteOneCharacter(editedCharacter.id);
-  	undisplayWindow(editWindow);
-  });*/
-
   document.getElementById("closeView").addEventListener("click", function () {
     undisplayWindow(viewWindow);
   });
@@ -2811,9 +2809,8 @@ var Character = function Character(name, shortDescription, description, image) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              console.log(characterToUpdate.id);
-              _context7.prev = 1;
-              _context7.next = 4;
+              _context7.prev = 0;
+              _context7.next = 3;
               return axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
                 name: characterToUpdate.name,
                 shortDescription: characterToUpdate.shortDescription,
@@ -2821,20 +2818,23 @@ var Character = function Character(name, shortDescription, description, image) {
                 image: characterToUpdate.image
               });
 
-            case 4:
+            case 3:
               return _context7.abrupt("return", _context7.sent);
 
-            case 7:
-              _context7.prev = 7;
-              _context7.t0 = _context7["catch"](1);
+            case 6:
+              _context7.prev = 6;
+              _context7.t0 = _context7["catch"](0);
               console.error(_context7.t0);
+
+            case 9:
+              console.log(characterToUpdate.id);
 
             case 10:
             case "end":
               return _context7.stop();
           }
         }
-      }, _callee7, null, [[1, 7]]);
+      }, _callee7, null, [[0, 6]]);
     }));
     return _axiosUpdateOneCharacter.apply(this, arguments);
   }
@@ -2845,14 +2845,14 @@ var Character = function Character(name, shortDescription, description, image) {
 
 
   function _axiosDeleteOneCharacter() {
-    _axiosDeleteOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(characterToDelete) {
+    _axiosDeleteOneCharacter = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(characterID) {
       return regeneratorRuntime.wrap(function _callee8$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
               _context8.prev = 0;
               _context8.next = 3;
-              return axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete);
+              return axios.delete("https://character-database.becode.xyz/characters" + "/" + characterID);
 
             case 3:
               return _context8.abrupt("return", _context8.sent);
@@ -2884,12 +2884,12 @@ var Character = function Character(name, shortDescription, description, image) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                displayWindow(viewWindow);
-                _context.next = 3;
+                _context.next = 2;
                 return axiosGetOneCharacter(charactersID[i]);
 
-              case 3:
+              case 2:
                 characterToView = _context.sent;
+                displayWindow(viewWindow);
                 displayOneCharacter(characterToView.data);
 
               case 5:
@@ -2905,12 +2905,12 @@ var Character = function Character(name, shortDescription, description, image) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                displayWindow(editWindow);
-                _context2.next = 3;
+                _context2.next = 2;
                 return axiosGetOneCharacter(charactersID[i]);
 
-              case 3:
+              case 2:
                 characterToEdit = _context2.sent;
+                displayWindow(editWindow);
                 retrieveValuesToEditOneCharacter(characterToEdit.data);
 
               case 5:
@@ -2971,6 +2971,8 @@ var Character = function Character(name, shortDescription, description, image) {
     document.getElementById("editDescription").value = character.description;
     document.getElementById("editImgPreview").src = "data:image/*;base64," + character.image;
     characterToEdit = character;
+    console.log("Character ID:", character.id);
+    console.log("CharacterToEdit ID:", characterToEdit.id);
     console.log("retrieveValue", characterToEdit.name);
   } // répétition sélection d'image et récupération base64
 
@@ -3031,6 +3033,14 @@ var Character = function Character(name, shortDescription, description, image) {
     return _deleteOneCharacter.apply(this, arguments);
   }
 
+  function resetForm() {
+    document.getElementById("createName").value = "";
+    document.getElementById("createShortDescription").value = "";
+    document.getElementById("createDescription").value = "";
+    document.getElementById("createImgPreview").src = "";
+    document.getElementById("createImgSelector").value = "";
+  }
+
   function createOneCharacter() {
     var nameInput = document.getElementById("createName").value;
     var shortDescriptionInput = document.getElementById("createShortDescription").value;
@@ -3062,42 +3072,6 @@ var Character = function Character(name, shortDescription, description, image) {
     window.style.display = "none";
   }
 })();
-/*
-
-Character object
-
-id: The identifier of the character as an UUID. // auto
-name: The name of the character.
-shortDescription: A short description of the character.
-description: A long description of the character in Markdown.
-image: An image of the character in Base64. 
-When creating or modifying a character this image will always be resized to 100x100 px and recompressed to JPEG.
-
-
-GET /characters[?name=:name]
-Returns a complete list of all the characters.
-
-Facultative name parameter filters on the name.
-
-GET /characters/:id
-Returns a character by id.
-
-POST /characters
-Only takes JSON as input.
-
-Creates a new character.
-
-Returns the newly created character id.
-
-PUT /characters/:id
-Only takes JSON as input.
-
-Updates a character.
-
-DELETE /characters/:id
-Deletes a character.
-
-*/
 },{"axios":"node_modules/axios/index.js","regenerator-runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3126,7 +3100,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35081" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45717" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

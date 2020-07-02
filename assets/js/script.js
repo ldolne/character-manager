@@ -20,7 +20,7 @@ class Character {
 	let editButtons = [];
 	let deleteButtons = [];
 
-	let editedCharacter = {};
+	let characterToEdit = {};
 
 	// Récupération d'éléments HTML
 	const viewWindow = document.getElementById("overlayView");
@@ -41,6 +41,7 @@ class Character {
 	// Boutons d'action
 
 	document.getElementById("btnCreation").addEventListener("click", () => {
+		resetForm();
 		displayWindow(createWindow);
 	});
 
@@ -50,22 +51,24 @@ class Character {
 		axiosPostOneCharacter(characterToAdd)
 		.then(character => {
 			console.table(character.data);
-			//undisplayWindow(createWindow);
+			undisplayWindow(createWindow);
 			window.location.reload(false);
 		})
 		.catch(error => console.error(error));
 	});
 
 	document.getElementById("editSubmitButton").addEventListener("click", () => {
-		editedCharacter = changeValuesToEditOneCharacter(editedCharacter);
+		let editedCharacter = changeValuesToEditOneCharacter(characterToEdit);
 
 		console.log("editedcharacter", editedCharacter);
+
+		console.log("editedcharacter ID", editedCharacter.id);
 
 		axiosUpdateOneCharacter(editedCharacter)
 		.then(data => {
 			console.table(data);
-			//undisplayWindow(editWindow);
-			//window.location.reload(false);
+			undisplayWindow(editWindow);
+			window.location.reload(false);
 		})
 		.catch(error => console.error(error));
 	});
@@ -77,11 +80,6 @@ class Character {
 	document.getElementById("editImgSelector").addEventListener("change", () => {
 		readImage(document.getElementById("editImgSelector"), document.getElementById("editImgPreview"));
 	});
-
-	/*document.getElementById("editDeleteButton").addEventListener("click", () => {
-		deleteOneCharacter(editedCharacter.id);
-		undisplayWindow(editWindow);
-	});*/
 
 	document.getElementById("closeView").addEventListener("click", () => {
 		undisplayWindow(viewWindow);
@@ -135,8 +133,6 @@ class Character {
 	}
 
 	async function axiosUpdateOneCharacter(characterToUpdate) {
-		console.log(characterToUpdate.id);
-
 		try {
 
 			return await axios.put("https://character-database.becode.xyz/characters" + "/" + characterToUpdate.id, {
@@ -150,12 +146,14 @@ class Character {
 		{
 			console.error(error);
 		}
+
+		console.log(characterToUpdate.id);
 	}
 
-	async function axiosDeleteOneCharacter(characterToDelete) {
+	async function axiosDeleteOneCharacter(characterID) {
 		try {
 
-			return await axios.delete("https://character-database.becode.xyz/characters" + "/" + characterToDelete);
+			return await axios.delete("https://character-database.becode.xyz/characters" + "/" + characterID);
 		}
 		catch (error)
 		{
@@ -174,14 +172,14 @@ class Character {
 		for (let i = 0; i < viewButtons.length; i++)
 		{
 			viewButtons[i].addEventListener("click", async () => {
-				displayWindow(viewWindow);
 				const characterToView = await axiosGetOneCharacter(charactersID[i]);
+				displayWindow(viewWindow);
 				displayOneCharacter(characterToView.data);
 			});
 
 			editButtons[i].addEventListener("click", async () => {
-				displayWindow(editWindow);
 				const characterToEdit = await axiosGetOneCharacter(charactersID[i]);
+				displayWindow(editWindow);
 				retrieveValuesToEditOneCharacter(characterToEdit.data);
 			});
 
@@ -225,6 +223,8 @@ class Character {
 		document.getElementById("editImgPreview").src = "data:image/*;base64," + character.image;
 
 		characterToEdit = character;
+		console.log("Character ID:", character.id);
+		console.log("CharacterToEdit ID:", characterToEdit.id);
 
 		console.log("retrieveValue", characterToEdit.name);
 	}
@@ -272,6 +272,14 @@ class Character {
 		}
 	}
 
+	function resetForm() {
+		document.getElementById("createName").value = "";
+		document.getElementById("createShortDescription").value = "";
+		document.getElementById("createDescription").value = "";
+		document.getElementById("createImgPreview").src = "";
+		document.getElementById("createImgSelector").value = "";
+	}
+
 	function createOneCharacter()
 	{
 		const nameInput = document.getElementById("createName").value;
@@ -316,41 +324,3 @@ class Character {
 	}
 
 })();
-
-
-/*
-
-Character object
-
-id: The identifier of the character as an UUID. // auto
-name: The name of the character.
-shortDescription: A short description of the character.
-description: A long description of the character in Markdown.
-image: An image of the character in Base64. 
-When creating or modifying a character this image will always be resized to 100x100 px and recompressed to JPEG.
-
-
-GET /characters[?name=:name]
-Returns a complete list of all the characters.
-
-Facultative name parameter filters on the name.
-
-GET /characters/:id
-Returns a character by id.
-
-POST /characters
-Only takes JSON as input.
-
-Creates a new character.
-
-Returns the newly created character id.
-
-PUT /characters/:id
-Only takes JSON as input.
-
-Updates a character.
-
-DELETE /characters/:id
-Deletes a character.
-
-*/
