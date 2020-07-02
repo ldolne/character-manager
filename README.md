@@ -104,6 +104,7 @@ To start using it today with the Character Database API you can **import** [this
 You can use a *css frameworks* like [Bootstrap](https://getbootstrap.com/) or [Materialize](https://materializecss.com/). 
 It will help you to design quickly your application. 
 
+*********
 
 
-Create by Laëtitia and Céline.
+**Create by Laëtitia and Céline.**
