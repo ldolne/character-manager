@@ -6,6 +6,7 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+  overflow: scroll;
   display: none; }
 
 .popup {
@@ -23,6 +24,12 @@
   right: 5px; }
   .open :hover {
     color: gray; }
+
+.labelViewCard {
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #db5719; }
 
 
 /*# sourceMappingURL=/singleCharacter.df744e2a.css.map */
