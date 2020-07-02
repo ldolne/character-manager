@@ -19,6 +19,7 @@ class Character {
 	let viewButtons = [];
 	let editButtons = [];
 	let deleteButtons = [];
+	let toggleButtons = [];
 
 	let characterToEdit = {};
 
@@ -33,8 +34,8 @@ class Character {
 	axiosGetAllExistingCharacters()
 	.then(charactersArray => {
 		displayAllCharacters(charactersArray.data);
-		//console.table(charactersID);
 		getAllButtons();
+		toggleScroll();
 	})
 	.catch(error => console.error(error));
 
@@ -50,7 +51,6 @@ class Character {
 
 		axiosPostOneCharacter(characterToAdd)
 		.then(character => {
-			console.table(character.data);
 			undisplayWindow(createWindow);
 			window.location.reload(false);
 		})
@@ -60,13 +60,8 @@ class Character {
 	document.getElementById("editSubmitButton").addEventListener("click", () => {
 		let editedCharacter = changeValuesToEditOneCharacter(characterToEdit);
 
-		console.log("editedcharacter", editedCharacter);
-
-		console.log("editedcharacter ID", editedCharacter.id);
-
 		axiosUpdateOneCharacter(editedCharacter)
 		.then(data => {
-			console.table(data);
 			undisplayWindow(editWindow);
 			window.location.reload(false);
 		})
@@ -163,6 +158,7 @@ class Character {
 
 	// FUNCTIONS MANAGING DATA
 
+
 	function getAllButtons()
 	{
 		viewButtons = document.getElementsByClassName("viewHero");
@@ -189,6 +185,20 @@ class Character {
 		}
 	}
 
+	function toggleScroll() 
+	{
+		toggleButtons = document.getElementsByClassName("toggleScroll");
+		const bodyElement = document.querySelector("body");
+
+		for(let i = 0; i < toggleButtons.length; i++)
+		{
+			toggleButtons[i].addEventListener("click", () => {
+				bodyElement.classList.toggle("fixBackground");
+				console.log("FixBG");
+			});
+		}
+	}
+	
 	function displayAllCharacters(charactersArray)
 	{	
 		const charactersElement = document.getElementById("charactersBoard");
@@ -223,26 +233,15 @@ class Character {
 		document.getElementById("editImgPreview").src = "data:image/*;base64," + character.image;
 
 		characterToEdit = character;
-		console.log("Character ID:", character.id);
-		console.log("CharacterToEdit ID:", characterToEdit.id);
-
-		console.log("retrieveValue", characterToEdit.name);
 	}
-
-		// répétition sélection d'image et récupération base64
 		
 	function changeValuesToEditOneCharacter(character)
 	{
-		// vérification que les champs soient tous remplis
 		const nameInput = document.getElementById("editName").value;
 		const shortDescriptionInput = document.getElementById("editShortDescription").value;
 		const descriptionInput = document.getElementById("editDescription").value;
 
 		const imagePreviewElement = document.getElementById("editImgPreview");
-
-		console.log(nameInput);
-		console.log(shortDescriptionInput);
-		console.log(descriptionInput);
 
 		const base64String = imagePreviewElement.src
 		.replace('data:', '')
@@ -287,14 +286,18 @@ class Character {
 		const descriptionInput = document.getElementById("createDescription").value;
 
 		const imagePreviewElement = document.getElementById("createImgPreview");
+		let base64String = "";
 
-		console.log(nameInput);
-		console.log(shortDescriptionInput);
-		console.log(descriptionInput);
-
-		const base64String = imagePreviewElement.src
-		.replace('data:', '')
-        .replace(/^.+,/, '');
+		if(imagePreviewElement.src != window.location.href)
+		{
+			base64String = imagePreviewElement.src
+			.replace('data:', '')
+	        .replace(/^.+,/, '');
+	    }
+	    else
+	    {
+	    	base64String = "";
+	    }
 
 		const newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput, base64String);
 
@@ -307,6 +310,7 @@ class Character {
 		const imagePreviewElement = imagePreview;
 
 		const reader = new FileReader();
+
 		reader.addEventListener('load', (event) => {
 		    imagePreviewElement.src = event.target.result;
 		});
@@ -322,5 +326,4 @@ class Character {
 	{
 	    window.style.display = "none";
 	}
-
 })();

@@ -11,7 +11,8 @@
 }
 
 .fixBackground{
-	background-attachment: fixed;
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 .card{
 	box-shadow: 2px 1px 5px gray;

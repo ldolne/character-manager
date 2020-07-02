@@ -2640,6 +2640,10 @@ var Character = function Character(name, shortDescription, description, image) {
   var viewButtons = [];
   var editButtons = [];
   var deleteButtons = [];
+<<<<<<< HEAD
+=======
+  var toggleButtons = [];
+>>>>>>> laetitia
   var characterToEdit = {}; // Récupération d'éléments HTML
 
   var viewWindow = document.getElementById("overlayView");
@@ -2648,9 +2652,15 @@ var Character = function Character(name, shortDescription, description, image) {
   // Génération des cartes contenant les données de l'API
 
   axiosGetAllExistingCharacters().then(function (charactersArray) {
+<<<<<<< HEAD
     displayAllCharacters(charactersArray.data); //console.table(charactersID);
 
     getAllButtons();
+=======
+    displayAllCharacters(charactersArray.data);
+    getAllButtons();
+    toggleScroll();
+>>>>>>> laetitia
   }).catch(function (error) {
     return console.error(error);
   }); // Boutons d'action
@@ -2662,7 +2672,10 @@ var Character = function Character(name, shortDescription, description, image) {
   document.getElementById("createSubmitButton").addEventListener("click", function () {
     var characterToAdd = createOneCharacter();
     axiosPostOneCharacter(characterToAdd).then(function (character) {
+<<<<<<< HEAD
       console.table(character.data);
+=======
+>>>>>>> laetitia
       undisplayWindow(createWindow);
       window.location.reload(false);
     }).catch(function (error) {
@@ -2671,10 +2684,14 @@ var Character = function Character(name, shortDescription, description, image) {
   });
   document.getElementById("editSubmitButton").addEventListener("click", function () {
     var editedCharacter = changeValuesToEditOneCharacter(characterToEdit);
+<<<<<<< HEAD
     console.log("editedcharacter", editedCharacter);
     console.log("editedcharacter ID", editedCharacter.id);
     axiosUpdateOneCharacter(editedCharacter).then(function (data) {
       console.table(data);
+=======
+    axiosUpdateOneCharacter(editedCharacter).then(function (data) {
+>>>>>>> laetitia
       undisplayWindow(editWindow);
       window.location.reload(false);
     }).catch(function (error) {
@@ -2945,6 +2962,21 @@ var Character = function Character(name, shortDescription, description, image) {
     }
   }
 
+<<<<<<< HEAD
+=======
+  function toggleScroll() {
+    toggleButtons = document.getElementsByClassName("toggleScroll");
+    var bodyElement = document.querySelector("body");
+
+    for (var i = 0; i < toggleButtons.length; i++) {
+      toggleButtons[i].addEventListener("click", function () {
+        bodyElement.classList.toggle("fixBackground");
+        console.log("FixBG");
+      });
+    }
+  }
+
+>>>>>>> laetitia
   function displayAllCharacters(charactersArray) {
     var charactersElement = document.getElementById("charactersBoard");
     var template = document.getElementById("tpl-card");
@@ -2971,6 +3003,7 @@ var Character = function Character(name, shortDescription, description, image) {
     document.getElementById("editDescription").value = character.description;
     document.getElementById("editImgPreview").src = "data:image/*;base64," + character.image;
     characterToEdit = character;
+<<<<<<< HEAD
     console.log("Character ID:", character.id);
     console.log("CharacterToEdit ID:", characterToEdit.id);
     console.log("retrieveValue", characterToEdit.name);
@@ -2979,13 +3012,21 @@ var Character = function Character(name, shortDescription, description, image) {
 
   function changeValuesToEditOneCharacter(character) {
     // vérification que les champs soient tous remplis
+=======
+  }
+
+  function changeValuesToEditOneCharacter(character) {
+>>>>>>> laetitia
     var nameInput = document.getElementById("editName").value;
     var shortDescriptionInput = document.getElementById("editShortDescription").value;
     var descriptionInput = document.getElementById("editDescription").value;
     var imagePreviewElement = document.getElementById("editImgPreview");
+<<<<<<< HEAD
     console.log(nameInput);
     console.log(shortDescriptionInput);
     console.log(descriptionInput);
+=======
+>>>>>>> laetitia
     var base64String = imagePreviewElement.src.replace('data:', '').replace(/^.+,/, '');
     character.name = nameInput;
     character.shortDescription = shortDescriptionInput;
@@ -3046,10 +3087,21 @@ var Character = function Character(name, shortDescription, description, image) {
     var shortDescriptionInput = document.getElementById("createShortDescription").value;
     var descriptionInput = document.getElementById("createDescription").value;
     var imagePreviewElement = document.getElementById("createImgPreview");
+<<<<<<< HEAD
     console.log(nameInput);
     console.log(shortDescriptionInput);
     console.log(descriptionInput);
     var base64String = imagePreviewElement.src.replace('data:', '').replace(/^.+,/, '');
+=======
+    var base64String = "";
+
+    if (imagePreviewElement.src != window.location.href) {
+      base64String = imagePreviewElement.src.replace('data:', '').replace(/^.+,/, '');
+    } else {
+      base64String = "";
+    }
+
+>>>>>>> laetitia
     var newCharacter = new Character(nameInput, shortDescriptionInput, descriptionInput, base64String);
     return newCharacter;
   }
