@@ -1,5 +1,7 @@
 const axios = require('axios').default; // avec intellisense/autocomplete
 const regeneratorRuntime = require("regenerator-runtime");
+const { Remarkable } = require('remarkable');
+var md = new Remarkable();
 
 // Définition de la classe Character
 class Character {
@@ -158,7 +160,6 @@ class Character {
 
 	// FUNCTIONS MANAGING DATA
 
-
 	function getAllButtons()
 	{
 		viewButtons = document.getElementsByClassName("viewHero");
@@ -207,7 +208,7 @@ class Character {
 			const clone = template.content.cloneNode(true);
 
 			clone.querySelector(".card-title").innerHTML = character.name;
-			clone.querySelector(".card-text").innerHTML = character.shortDescription;
+			clone.querySelector(".card-text").innerHTML = md.render(character.shortDescription);
 			clone.querySelector(".card-img").src = "data:image/*;base64," + character.image;
 			charactersID.push(character.id);
 
@@ -219,8 +220,8 @@ class Character {
 	function displayOneCharacter(character)
 	{	
 		document.querySelector(".viewCardTitle").innerHTML = character.name;
-		document.querySelector(".viewCardText").innerHTML = character.shortDescription;
-		document.querySelector(".viewCardLongtext").innerHTML = character.description;
+		document.querySelector(".viewCardText").innerHTML = md.render(character.shortDescription);
+		document.querySelector(".viewCardLongtext").innerHTML = md.render(character.description);
 		document.querySelector(".viewCardImg").src = "data:image/*;base64," + character.image;
 	}
 
