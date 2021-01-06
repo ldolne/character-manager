@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/ldolne/character-manager#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "node-sass": "^4.14.1",
     "remarkable": "^2.0.1"
   },
